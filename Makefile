@@ -6,7 +6,7 @@
 #    By: lfatton <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/30 00:05:23 by lfatton           #+#    #+#              #
-#    Updated: 2018/07/03 06:29:54 by lfatton          ###   ########.fr        #
+#    Updated: 2018/10/15 14:23:44 by lfatton          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,11 @@ NAME = fractol
 SRC_PATH = srcs
 
 SRC_NAME =	main.c \
+			environment.c \
+			image.c \
+			mandelbrot.c \
+			julia.c \
+			burning_ship.c \
 
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 
@@ -40,11 +45,11 @@ IFLAGS = -I $(INCL_PATH) -I $(LIBFT_INCL_PATH) -I $(MLX_INCL_PATH)
 
 LDLIBFT = -L ./libft -lft
 
-LDLMX = -L ./minilibx -lmlx -lXext -lX11
+LDLMX = -L ./minilibx -lmlx
 
-#LDLIBS = -lft -lmlx -lXext -lX11
+#LINUX = -lXext -lX11
 
-#FRMFLAGS = -framework OpenGL -framework AppKit
+FRMFLAGS = -framework OpenGL -framework AppKit
 
 CC = clang
 
@@ -56,7 +61,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(INCLS)
 	$(MAKE) -C libft
-	$(CC) $(FRMFLAGS) $(OBJS) $(LDLIBFT) $(LDLMX) -o $@
+	$(CC) $(FRMFLAGS) $(OBJS) $(LDLIBFT) $(LDLMX) $(LINUX) -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || true

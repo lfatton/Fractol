@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/15 14:08:44 by lfatton           #+#    #+#             */
+/*   Updated: 2018/10/15 14:23:17 by lfatton          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
@@ -16,8 +28,8 @@
 # define WIN_W 2560
 # define WIN_H 1440
 
-# define LINUX 1
-# define MACOS 0
+# define LINUX 0
+# define MACOS 1
 
 # if LINUX
 #  define ESC 65307
