@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:15:40 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/16 19:47:36 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/16 21:33:48 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	mandelbrot(t_env *e)
 {
-	int	row;
-	int	col;
-	int	i;
-	double tmp;
+	int		row;
+	int		col;
+	int		i;
+	double	tmp;
+
 	row = 0;
 	while (row < IMG_H)
 	{
@@ -37,7 +38,7 @@ void	mandelbrot(t_env *e)
 				i++;
 			}
 			if (i < ITER_MAX)
-				create_pix(e, col, row, e->p->color[i]);
+				create_pix(e, col, row, get_color(i));
 			else
 				create_pix(e, col, row, BLACK);
 			col++;

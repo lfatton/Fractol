@@ -6,11 +6,37 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:14:07 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/16 19:47:39 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/16 21:33:43 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+int		get_color(int i)
+{
+	int	col;
+	int ratio;
+	int	r;
+	int	g;
+	int	b;
+
+	if (i > 0 && i < ITER_MAX / 2 - 1)
+	{
+		ratio = (ITER_MAX / 2 - 1) / i;
+		r = ratio * 10 << 16;
+		g = 0 << 8;
+		b = 0;
+	}
+	else
+	{
+		ratio = ITER_MAX - 1 / i;
+		r = ratio * 10 << 16;
+		g = 255 << 8;
+		b = 255;
+	}
+	col = r + g + b;
+	return (col);
+}
 
 void	create_pix(t_env *e, int x, int y, int col)
 {

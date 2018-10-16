@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:08:44 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/16 19:47:34 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/16 21:33:50 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,16 @@
 # include <math.h>
 # include <limits.h>
 
-# define WIN_W 2560
-# define WIN_H 1440
+# define WIN_W 1920
+# define WIN_H 1080
 
-# define IMG_W 2560
-# define IMG_H 1440
+# define IMG_W 1920
+# define IMG_H 1080
 # define ITER_MAX 50
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
+# define RED 0xFF0000
 
 # if __APPLE__
 #  define ESC 53
@@ -66,7 +67,9 @@
 
 typedef struct	s_img
 {
-	int		color;
+	int		r;
+	int		g;
+	int		b;
 }				t_img;
 
 typedef struct	s_point
@@ -75,7 +78,6 @@ typedef struct	s_point
 	double	c_im;
 	double	x;
 	double	y;
-	int		color[INT_MAX];
 }				t_point;
 
 typedef struct  s_env
@@ -102,5 +104,6 @@ void	mandelbrot(t_env *e);
 void	julia(t_env *e);
 void	burning_ship(t_env *e);
 void	print_image(t_env *e, int fract);
+int		get_color(int i);
 
 #endif
