@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:11:45 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/15 14:13:35 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/16 19:47:44 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int		deal_key(int key, t_env *e)
 	return (0);
 }
 
-void	init_fractol(t_env *e, char *str)
+void	init_fractol(t_env *e, char *str, int fract)
 {
 	e->mlx_ptr = mlx_init();
 	e->win_ptr = mlx_new_window(e->mlx_ptr, WIN_W, WIN_H, str);
-	print_image(e);
+	print_image(e, fract);
 }
 
 void	quit_fractol(t_env *e)

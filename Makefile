@@ -6,7 +6,7 @@
 #    By: lfatton <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/30 00:05:23 by lfatton           #+#    #+#              #
-#    Updated: 2018/10/15 14:23:44 by lfatton          ###   ########.fr        #
+#    Updated: 2018/10/16 19:36:48 by lfatton          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,9 +47,11 @@ LDLIBFT = -L ./libft -lft
 
 LDLMX = -L ./minilibx -lmlx
 
-#LINUX = -lXext -lX11
-
-FRMFLAGS = -framework OpenGL -framework AppKit
+ifeq ($(shell uname), Darwin)
+	MLXFLAGS = -framework OpenGL -framework AppKit
+else
+	MLXFLAGS = -lXext -lX11
+endif
 
 CC = clang
 
@@ -61,7 +63,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(INCLS)
 	$(MAKE) -C libft
-	$(CC) $(FRMFLAGS) $(OBJS) $(LDLIBFT) $(LDLMX) $(LINUX) -o $@
+	$(CC) $(MLXFLAGS) $(OBJS) $(LDLIBFT) $(LDLMX) -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
