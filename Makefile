@@ -35,7 +35,17 @@ INCL_NAME = fractol.h
 
 INCL_PATH = includes
 
-MLX_INCL_PATH = ./minilibx
+ifeq ($(shell uname), Darwin)
+	MLX_NAME = minilibx_macos
+	MLX_INCL_PATH = ./minilibx_macos
+	LDLMX = -L ./minilibx_macos -lmlx
+	MLXFLAGS = -framework OpenGL -framework AppKit
+else
+	MLX_NAME = minilibx_linux
+	MLX_INCL_PATH = ./minilibx_linux
+	LDLMX = -L ./minilibx_linux -lmlx
+	MLXFLAGS = -lXext -lX11
+endif
 
 LIBFT_INCL_PATH = ./libft/includes
 
@@ -44,14 +54,6 @@ INCLS = $(addprefix $(INCL_PATH)/,$(INCL_NAME))
 IFLAGS = -I $(INCL_PATH) -I $(LIBFT_INCL_PATH) -I $(MLX_INCL_PATH)
 
 LDLIBFT = -L ./libft -lft
-
-LDLMX = -L ./minilibx -lmlx
-
-ifeq ($(shell uname), Darwin)
-	MLXFLAGS = -framework OpenGL -framework AppKit
-else
-	MLXFLAGS = -lXext -lX11
-endif
 
 CC = clang
 
@@ -62,8 +64,9 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJS) $(INCLS)
+	$(MAKE) -C $(MLX_NAME)
 	$(MAKE) -C libft
-	$(CC) $(MLXFLAGS) $(OBJS) $(LDLIBFT) $(LDLMX) -o $@
+	$(CC) $(OBJS) $(LDLIBFT) $(LDLMX) $(MLXFLAGS) -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
@@ -83,5 +86,6 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 	$(MAKE) -C libft fclean
+	$(MAKE) -C $(MLX_NAME) clean
 
 re: fclean all

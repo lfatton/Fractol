@@ -16,7 +16,12 @@
 # include <string.h>
 
 # define BUFF_SIZE 1000
-# define FD_MAX _SC_OPEN_MAX
+
+# if __APPLE__
+#  define FD_MAX OPEN_MAX
+# else
+#  define FD_MAX _SC_OPEN_MAX
+# endif
 
 typedef struct	s_list
 {
