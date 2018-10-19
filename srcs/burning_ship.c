@@ -14,5 +14,5 @@
 
 void	burning_ship(t_env *e)
 {
-	e->p->x = 0;
+	e->p->z_i = 0;
 }

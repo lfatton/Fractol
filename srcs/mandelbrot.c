@@ -20,13 +20,14 @@ void	mandelbrot(t_env *e)
 	double	tmp;
 
 	y = 0;
+printf("%f\n", e->img->zoom);
 	while (y < IMG_H)
 	{
 		x = 0;
 		while (x < IMG_W)
 		{
-			e->p->c_r = (x - IMG_W / 2.0) * e->img->zoom / IMG_W;
-			e->p->c_i = (y - IMG_H / 2.0) * e->img->zoom / IMG_W;
+			e->p->c_r = (x - IMG_W / 2.0) * (e->img->zoom / IMG_W);
+			e->p->c_i = (y - IMG_H / 2.0) * (e->img->zoom / IMG_W);
 			e->p->z_r = 0;
 			e->p->z_i = 0;
 			i = 0;

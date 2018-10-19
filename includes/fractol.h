@@ -85,8 +85,6 @@ typedef struct	s_point
 	double	z_i;
 	double	k_r;
 	double	k_i;
-	int	x0;
-	int	y0;
 }				t_point;
 
 typedef struct  s_env
@@ -114,7 +112,8 @@ void	julia(t_env *e);
 void	burning_ship(t_env *e);
 void	print_image(t_env *e);
 int		get_color(int i);
-void	zoom(t_env *e);
+void	zoom(t_env *e, int key);
+void	toggle_k(t_env *e, int key);
 void	set_values(t_env *e);
 void	resest(t_env *e);
 

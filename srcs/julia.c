@@ -25,10 +25,8 @@ void	julia(t_env *e)
 		x = 0;
 		while (x < IMG_W)
 		{
-			e->p->k_r = 0.353 * e->img->zoom / IMG_W;
-			e->p->k_i = 0.288 * e->img->zoom / IMG_W;
-			e->p->z_r = 0;
-			e->p->z_i = 0;
+			e->p->z_r = (x - IMG_W / 2.0) * (e->img->zoom / IMG_W);
+			e->p->z_i = (y - IMG_H / 2.0) * (e->img->zoom / IMG_W);
 			i = 0;
 			while ((e->p->z_r * e->p->z_r + e->p->z_i * e->p->z_i <= 4) && i < ITER_MAX)
 			{

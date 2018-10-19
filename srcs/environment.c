@@ -18,12 +18,28 @@ void	error_fractol(char *err)
 	exit(EXIT_FAILURE);
 }
 
-void	zoom(t_env *e)
+void	zoom(t_env *e, int key)
 {
-	if (UP_ARROW)
+	if (key == UP_ARROW)
 		e->img->zoom -= 0.01;
 	else
 		e->img->zoom += 0.01;
+	mlx_destroy_image(e->mlx_ptr, e->img_ptr);
+	print_image(e);
+}
+
+void	toggle_k(t_env *e, int key)
+{
+	if (key == LEFT_ARROW)
+	{	
+		e->p->k_r -= 0.01;
+		e->p->k_i -= 0.01;
+	}
+	else
+	{	
+		e->p->k_r += 0.01;
+		e->p->k_i += 0.01;
+	}
 	mlx_destroy_image(e->mlx_ptr, e->img_ptr);
 	print_image(e);
 }
@@ -40,7 +56,9 @@ int		deal_key(int key, t_env *e)
 	if (key == ESC)
 		quit_fractol(e);
 	if (key == UP_ARROW || key == DOWN_ARROW)
-		zoom(e);
+		zoom(e, key);
+	if (key == LEFT_ARROW || key == RIGHT_ARROW)
+		toggle_k(e, key);
 	if (key == KEY_R)
 		reset(e);
 	return (0);
@@ -49,8 +67,8 @@ int		deal_key(int key, t_env *e)
 void	set_values(t_env *e)
 {
 	e->img->zoom = 4.0;
-	e->p->x0 = 100;
-	e->p->y0 = 100;
+	e->p->k_r = 0.353;
+	e->p->k_i = 0.288;
 }
 
 void	init_fractol(t_env *e, char *str)
