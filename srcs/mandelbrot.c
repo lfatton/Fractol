@@ -14,35 +14,35 @@
 
 void	mandelbrot(t_env *e)
 {
-	int		row;
-	int		col;
+	int		y;
+	int		x;
 	int		i;
 	double	tmp;
 
-	row = 0;
-	while (row < IMG_H)
+	y = 0;
+	while (y < IMG_H)
 	{
-		col = 0;
-		while (col < IMG_W)
+		x = 0;
+		while (x < IMG_W)
 		{
-			e->p->c_re = (col - IMG_W / 2.0) * 4.0 / IMG_W;
-			e->p->c_im = (row - IMG_H / 2.0) * 4.0 / IMG_W;
-			e->p->x = 0;
-			e->p->y = 0;
+			e->p->c_r = (x - IMG_W / 2.0) * e->img->zoom / IMG_W;
+			e->p->c_i = (y - IMG_H / 2.0) * e->img->zoom / IMG_W;
+			e->p->z_r = 0;
+			e->p->z_i = 0;
 			i = 0;
-			while ((e->p->x * e->p->x + e->p->y * e->p->y <= 4) && i < ITER_MAX)
+			while ((e->p->z_r * e->p->z_r + e->p->z_i * e->p->z_i <= 4) && i < ITER_MAX)
 			{
-				tmp = e->p->x * e->p->x - e->p->y * e->p->y + e->p->c_re;
-				e->p->y = 2 * e->p->x * e->p->y + e->p->c_im;
-				e->p->x = tmp;
+				tmp = e->p->z_r * e->p->z_r - e->p->z_i * e->p->z_i + e->p->c_r;
+				e->p->z_i = 2 * e->p->z_r * e->p->z_i + e->p->c_i;
+				e->p->z_r = tmp;
 				i++;
 			}
 			if (i < ITER_MAX)
-				create_pix(e, col, row, get_color(i));
+				create_pix(e, x, y, get_color(i));
 			else
-				create_pix(e, col, row, BLACK);
-			col++;
+				create_pix(e, x, y, BLACK);
+			x++;
 		}
-		row++;
+		y++;
 	}
 }

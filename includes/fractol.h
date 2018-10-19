@@ -37,6 +37,10 @@
 # define BLACK 0x000000
 # define RED 0xFF0000
 
+# define MANDEL 1
+# define JULIA 2
+# define SHIP 3
+
 # if __APPLE__
 #  define ESC 53
 #  define UP_ARROW 126
@@ -70,14 +74,19 @@ typedef struct	s_img
 	int		r;
 	int		g;
 	int		b;
+	double		zoom;
 }				t_img;
 
 typedef struct	s_point
 {
-	double	c_re;
-	double	c_im;
-	double	x;
-	double	y;
+	double	c_r;
+	double	c_i;
+	double	z_r;
+	double	z_i;
+	double	k_r;
+	double	k_i;
+	int	x0;
+	int	y0;
 }				t_point;
 
 typedef struct  s_env
@@ -89,21 +98,24 @@ typedef struct  s_env
 	int		bpp;
 	int		s_l;
 	int		endian;
-	int		zoom;
+	int		fract;
 	t_img	*img;
 	t_point	*p;
 }				t_env;
 
 # include <stdio.h>
 void	create_pix(t_env *e, int x, int y, int col);
-void	init_fractol(t_env *e, char *strn, int fract);
+void	init_fractol(t_env *e, char *str);
 int		deal_key(int key, t_env *e);
 void	error_fractol(char *err);
 void	quit_fractol(t_env *e);
 void	mandelbrot(t_env *e);
 void	julia(t_env *e);
 void	burning_ship(t_env *e);
-void	print_image(t_env *e, int fract);
+void	print_image(t_env *e);
 int		get_color(int i);
+void	zoom(t_env *e);
+void	set_values(t_env *e);
+void	resest(t_env *e);
 
 #endif

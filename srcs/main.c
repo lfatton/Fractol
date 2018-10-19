@@ -23,14 +23,13 @@ int             main(int ac, char **av)
 	if (ac != 2)
                 error_fractol("usage: ./fractol fractal_name");
 	if (!ft_strcmp(av[1], "mandelbrot"))
-	{
-		init_fractol(&e, av[1], 1);
-	}
+		e.fract = MANDEL;
 	else if (!ft_strcmp(av[1], "julia"))
-		init_fractol(&e, av[1], 2);
+		e.fract = JULIA;
 	else if (!ft_strcmp(av[1], "burningship"))
-		init_fractol(&e, av[1], 3);
+		e.fract = SHIP;
 	else
 		error_fractol("error: not a valid fractal name");
+	init_fractol(&e, av[1]);
         return (0);
 }
