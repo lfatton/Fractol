@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:15:40 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/16 21:33:48 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/19 22:37:18 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,28 @@
 
 void	mandelbrot(t_env *e)
 {
-	int		y;
-	int		x;
 	int		i;
 	double	tmp;
 
-	y = 0;
-printf("%f\n", e->img->zoom);
-	while (y < IMG_H)
+	e->p->y = -1;
+	while (++e->p->y < IMG_H)
 	{
-		x = 0;
-		while (x < IMG_W)
+		e->p->x = -1;
+		while (++e->p->x < IMG_W)
 		{
-			e->p->c_r = (x - IMG_W / 2.0) * (e->img->zoom / IMG_W);
-			e->p->c_i = (y - IMG_H / 2.0) * (e->img->zoom / IMG_W);
+			e->p->c_r = (e->p->x - IMG_W / 2.0) * (e->img->zoom / IMG_W);
+			e->p->c_i = (e->p->y - IMG_H / 2.0) * (e->img->zoom / IMG_W);
 			e->p->z_r = 0;
 			e->p->z_i = 0;
-			i = 0;
-			while ((e->p->z_r * e->p->z_r + e->p->z_i * e->p->z_i <= 4) && i < ITER_MAX)
+			i = -1;
+			while ((e->p->z_r * e->p->z_r + e->p->z_i * e->p->z_i <= 4) && ++i
+					< ITER_MAX)
 			{
 				tmp = e->p->z_r * e->p->z_r - e->p->z_i * e->p->z_i + e->p->c_r;
 				e->p->z_i = 2 * e->p->z_r * e->p->z_i + e->p->c_i;
 				e->p->z_r = tmp;
-				i++;
 			}
-			if (i < ITER_MAX)
-				create_pix(e, x, y, get_color(i));
-			else
-				create_pix(e, x, y, BLACK);
-			x++;
+			i < ITER_MAX ? create_pix(e, get_color(i)) : create_pix(e, BLACK);
 		}
-		y++;
 	}
 }

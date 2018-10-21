@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:16:18 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/16 20:01:43 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/19 22:38:25 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,26 @@
 
 void	julia(t_env *e)
 {
-	int		y;
-	int		x;
 	int		i;
 	double	tmp;
 
-	y = 0;
-	while (y < IMG_H)
+	e->p->y = -1;
+	while (++e->p->y < IMG_H)
 	{
-		x = 0;
-		while (x < IMG_W)
+		e->p->x = -1;
+		while (++e->p->x < IMG_W)
 		{
-			e->p->z_r = (x - IMG_W / 2.0) * (e->img->zoom / IMG_W);
-			e->p->z_i = (y - IMG_H / 2.0) * (e->img->zoom / IMG_W);
-			i = 0;
-			while ((e->p->z_r * e->p->z_r + e->p->z_i * e->p->z_i <= 4) && i < ITER_MAX)
+			e->p->z_r = (e->p->x - IMG_W / 2.0) * (e->img->zoom / IMG_W);
+			e->p->z_i = (e->p->y - IMG_H / 2.0) * (e->img->zoom / IMG_W);
+			i = -1;
+			while ((e->p->z_r * e->p->z_r + e->p->z_i * e->p->z_i <= 4) && ++i
+					< ITER_MAX)
 			{
 				tmp = e->p->z_r * e->p->z_r - e->p->z_i * e->p->z_i + e->p->k_r;
 				e->p->z_i = 2 * e->p->z_r * e->p->z_i + e->p->k_i;
 				e->p->z_r = tmp;
-				i++;
 			}
-			if (i < ITER_MAX)
-				create_pix(e, x, y, get_color(i));
-			else
-				create_pix(e, x, y, BLACK);
-			x++;
+			i < ITER_MAX ? create_pix(e, get_color(i)) : create_pix(e, BLACK);
 		}
-		y++;
 	}
-
 }

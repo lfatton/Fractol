@@ -6,7 +6,7 @@
 #    By: lfatton <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/30 00:05:23 by lfatton           #+#    #+#              #
-#    Updated: 2018/10/16 20:52:22 by lfatton          ###   ########.fr        #
+#    Updated: 2018/10/19 22:47:23 by lfatton          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC_PATH = srcs
 
 SRC_NAME =	main.c \
 			environment.c \
+			events.c \
 			image.c \
 			mandelbrot.c \
 			julia.c \

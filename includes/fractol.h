@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:08:44 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/16 21:33:50 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/21 19:51:22 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@
 # include <math.h>
 # include <limits.h>
 
+# include <stdio.h>
+
 # define WIN_W 1920
 # define WIN_H 1080
 
 # define IMG_W 1920
 # define IMG_H 1080
-# define ITER_MAX 50
+# define ITER_MAX 665
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
@@ -71,50 +73,51 @@
 
 typedef struct	s_img
 {
-	int		r;
-	int		g;
-	int		b;
+	int			r;
+	int			g;
+	int			b;
 	double		zoom;
 }				t_img;
 
 typedef struct	s_point
 {
-	double	c_r;
-	double	c_i;
-	double	z_r;
-	double	z_i;
-	double	k_r;
-	double	k_i;
+	double		c_r;
+	double		c_i;
+	double		z_r;
+	double		z_i;
+	double		k_r;
+	double		k_i;
+	int			x;
+	int			y;
 }				t_point;
 
-typedef struct  s_env
+typedef struct	s_env
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*img_ptr;
-	char	*img_str;
-	int		bpp;
-	int		s_l;
-	int		endian;
-	int		fract;
-	t_img	*img;
-	t_point	*p;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	void		*img_ptr;
+	char		*img_str;
+	int			bpp;
+	int			s_l;
+	int			endian;
+	int			fract;
+	t_img		*img;
+	t_point		*p;
 }				t_env;
 
-# include <stdio.h>
-void	create_pix(t_env *e, int x, int y, int col);
-void	init_fractol(t_env *e, char *str);
-int		deal_key(int key, t_env *e);
-void	error_fractol(char *err);
-void	quit_fractol(t_env *e);
-void	mandelbrot(t_env *e);
-void	julia(t_env *e);
-void	burning_ship(t_env *e);
-void	print_image(t_env *e);
-int		get_color(int i);
-void	zoom(t_env *e, int key);
-void	toggle_k(t_env *e, int key);
-void	set_values(t_env *e);
-void	resest(t_env *e);
+void			create_pix(t_env *e, int col);
+void			init_fractol(t_env *e, char *str);
+int				deal_key(int key, t_env *e);
+void			error_fractol(char *err);
+void			quit_fractol(t_env *e);
+void			mandelbrot(t_env *e);
+void			julia(t_env *e);
+void			burning_ship(t_env *e);
+void			print_image(t_env *e);
+int				get_color(int i);
+void			zoom(t_env *e, int key);
+void			toggle_k(t_env *e, int key);
+void			set_values(t_env *e);
+void			reset(t_env *e);
 
 #endif

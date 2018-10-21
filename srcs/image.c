@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:14:07 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/16 21:33:43 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/19 22:30:52 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ int		get_color(int i)
 	return (col);
 }
 
-void	create_pix(t_env *e, int x, int y, int col)
+void	create_pix(t_env *e, int col)
 {
 	int	pix;
 
-	if (x < 0 || x >= WIN_W || y < 0 || y >= WIN_H)
+	if (e->p->x < 0 || e->p->x >= WIN_W || e->p->y < 0 || e->p->y >= WIN_H)
 		return ;
-	pix = (x * e->bpp / 8) + (y * e->s_l);
+	pix = (e->p->x * e->bpp / 8) + (e->p->y * e->s_l);
 	e->img_str[pix++] = (col) & 0x000000FF;
 	e->img_str[pix++] = (col >> 8) & 0x000000FF;
 	e->img_str[pix] = (col >> 16) & 0x000000FF;
