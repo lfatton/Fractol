@@ -50,6 +50,7 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strstr(const char *dst, const char *src);
 char			*ft_strnstr(const char *dst, const char *src, size_t len);
 int				ft_abs(int value);
+double			ft_dabs(double value);
 int				ft_isblank(int c);
 int				ft_isspace(int c);
 int				ft_isalpha(int c);

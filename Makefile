@@ -23,6 +23,7 @@ SRC_NAME =	main.c \
 			mandelbrot.c \
 			julia.c \
 			burning_ship.c \
+			sierpinsky_triangle.c \
 
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 
@@ -46,6 +47,7 @@ else
 	MLX_INCL_PATH = ./minilibx_linux
 	LDLMX = -L ./minilibx_linux -lmlx
 	MLXFLAGS = -lXext -lX11
+	MATHLIB = -lm
 endif
 
 LIBFT_INCL_PATH = ./libft/includes
@@ -67,11 +69,14 @@ all: $(NAME)
 $(NAME): $(OBJS) $(INCLS)
 	$(MAKE) -C $(MLX_NAME)
 	$(MAKE) -C libft
-	$(CC) $(OBJS) $(LDLIBFT) $(LDLMX) $(MLXFLAGS) -o $@
+	$(CC) $(OBJS) $(LDLIBFT) $(LDLMX) $(MLXFLAGS) $(MATHLIB) -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	$(CC) $(CFLAGS) $(IFLAGS) -o $@ -c $<
+
+run: $(NAME)
+	./$(NAME) julia
 
 norm:
 	norminette $(SRCS) $(INCLS)

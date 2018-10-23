@@ -16,24 +16,27 @@ void	julia(t_env *e)
 {
 	int		i;
 	double	tmp;
+	double	prev_z_r;
+	double	prev_z_i;
 
-	e->p->y = -1;
-	while (++e->p->y < IMG_H)
+	while (++e->p->y < WIN_H)
 	{
 		e->p->x = -1;
-		while (++e->p->x < IMG_W)
+		while (++e->p->x < WIN_W)
 		{
-			e->p->z_r = (e->p->x - IMG_W / 2.0) * (e->img->zoom / IMG_W);
-			e->p->z_i = (e->p->y - IMG_H / 2.0) * (e->img->zoom / IMG_W);
+			e->p->z_r = (e->p->x + e->w) / e->img->zoom;
+			e->p->z_i = (e->p->y + e->h) / e->img->zoom;
 			i = -1;
 			while ((e->p->z_r * e->p->z_r + e->p->z_i * e->p->z_i <= 4) && ++i
-					< ITER_MAX)
+					< e->img->i_max)
 			{
-				tmp = e->p->z_r * e->p->z_r - e->p->z_i * e->p->z_i + e->p->k_r;
-				e->p->z_i = 2 * e->p->z_r * e->p->z_i + e->p->k_i;
+				prev_z_r = e->p->z_r;
+				prev_z_i = e->p->z_i;
+				tmp = prev_z_r * prev_z_r - prev_z_i * prev_z_i + e->p->k_r;
+				e->p->z_i = 2 * prev_z_r * prev_z_i + e->p->k_i;
 				e->p->z_r = tmp;
 			}
-			i < ITER_MAX ? create_pix(e, get_color(i)) : create_pix(e, BLACK);
+			create_pix(e, get_color(e, i));
 		}
 	}
 }

@@ -12,6 +12,21 @@
 
 #include "fractol.h"
 
+int	get_fractal_name(t_env *e, char *str)
+{
+	if (!ft_strcmp(str, "mandelbrot"))
+		e->fract = MANDEL;
+	else if (!ft_strcmp(str, "julia"))
+		e->fract = JULIA;
+	else if (!ft_strcmp(str, "burning_ship"))
+		e->fract = SHIP;
+	else if (!ft_strcmp(str, "sierpinsky_triangle"))
+		e->fract = TRI;
+	else
+		return (0);
+	return (e->fract);
+}
+
 int	main(int ac, char **av)
 {
 	t_env	e;
@@ -20,16 +35,8 @@ int	main(int ac, char **av)
 
 	e.img = &img;
 	e.p = &p;
-	if (ac != 2)
-		error_fractol("usage: ./fractol fractal_name");
-	if (!ft_strcmp(av[1], "mandelbrot"))
-		e.fract = MANDEL;
-	else if (!ft_strcmp(av[1], "julia"))
-		e.fract = JULIA;
-	else if (!ft_strcmp(av[1], "burningship"))
-		e.fract = SHIP;
-	else
-		error_fractol("error: not a valid fractal name");
+	if (ac != 2 || !get_fractal_name(&e, av[1]))
+		error_fractol("usage: ./fractol [mandelbrot/julia/burning_ship/sierpinsky_triangle]");
 	init_fractol(&e, av[1]);
 	return (0);
 }
