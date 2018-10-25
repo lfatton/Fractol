@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:16:18 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/19 22:38:25 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/25 15:56:44 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,18 @@ void	julia(t_env *e)
 		e->p->x = -1;
 		while (++e->p->x < WIN_W)
 		{
-			e->p->z_r = (e->p->x + e->w) / e->img->zoom;
-			e->p->z_i = (e->p->y + e->h) / e->img->zoom;
 			i = -1;
-			while ((e->p->z_r * e->p->z_r + e->p->z_i * e->p->z_i <= 4) && ++i
-					< e->img->i_max)
+			get_coords(e);
+			while ((e->p->z_r2 + e->p->z_i2 <= 4) && ++i < e->img->i_max)
 			{
+				pow_coords(e);
 				prev_z_r = e->p->z_r;
 				prev_z_i = e->p->z_i;
-				tmp = prev_z_r * prev_z_r - prev_z_i * prev_z_i + e->p->k_r;
+				tmp = e->p->z_r2 - e->p->z_i2 + e->p->k_r;
 				e->p->z_i = 2 * prev_z_r * prev_z_i + e->p->k_i;
 				e->p->z_r = tmp;
 			}
-			create_pix(e, get_color(e, i));
+			e->img_str[e->p->x + (e->p->y * WIN_W)] = get_color(e, i);
 		}
 	}
 }

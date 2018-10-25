@@ -6,7 +6,7 @@
 #    By: lfatton <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/30 00:05:23 by lfatton           #+#    #+#              #
-#    Updated: 2018/10/19 22:47:23 by lfatton          ###   ########.fr        #
+#    Updated: 2018/10/25 17:26:27 by lfatton          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC_NAME =	main.c \
 			mandelbrot.c \
 			julia.c \
 			burning_ship.c \
+			burning_julia.c \
 			sierpinsky_triangle.c \
 
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))

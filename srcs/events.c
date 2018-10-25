@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 22:38:46 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/21 18:58:53 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/25 17:50:57 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	zoom(t_env *e, int key, int x, int y)
 void	toggle_k(t_env *e, int key)
 {
 	if (key == KEY_A)
-		e->p->k_r -= 0.001;
+		e->p->k_r -= 0.005;
 	else if (key == KEY_D)
-		e->p->k_r += 0.001;
+		e->p->k_r += 0.005;
 	else if (key == KEY_W)
-		e->p->k_i += 0.001;
+		e->p->k_i += 0.005;
 	else
-		e->p->k_i -= 0.001;
+		e->p->k_i -= 0.005;
 	mlx_destroy_image(e->mlx_ptr, e->img_ptr);
 	print_image(e);
 }
@@ -91,8 +91,14 @@ void	change_fractal(t_env *e, int key)
 	else if (key == KEY_3)
 		e->fract = SHIP;
 	else if (key == KEY_4)
+		e->fract = BJULIA;
+	else if (key == KEY_5)
 		e->fract = TRI;
-	reset(e);
+	set_values(e);
+	if (key == KEY_C)
+		e->cos = 1;
+	mlx_destroy_image(e->mlx_ptr, e->img_ptr);
+	print_image(e);
 }
 
 void	reset(t_env *e)

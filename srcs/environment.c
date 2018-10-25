@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:11:45 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/21 19:51:24 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/25 17:50:50 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int		key_hook(int key, t_env *e)
 		move_window(e, key);
 	if (key == PAD_1 || key == PAD_2 || key == PAD_3)
 		change_color(e, key);
-	if (key == KEY_1 || key == KEY_2 || key == KEY_3 || key == KEY_4)
+	if (key == KEY_1 || key == KEY_2 || key == KEY_3 || key == KEY_4
+		|| 	key == KEY_5 || key == KEY_C)
 		change_fractal(e, key);
 	if (key == KEY_R)
 		reset(e);
@@ -39,12 +40,11 @@ int		mouse_hook(int btn, int x, int y, t_env *e)
 	if (btn == ZOOM_LOCK)
 		e->lock = (e->lock == 0) ? 1 : 0;
 	if (!e->lock)
-	{	
+	{
 		if (btn == LEFT_BUTTON || btn == RIGHT_BUTTON)
 			change_iter(e, btn);
 		if (btn == ZOOM_IN || btn == ZOOM_OUT)
 			zoom(e, btn, x, y);
-			
 	}
 	return (0);
 }
@@ -55,12 +55,10 @@ void	set_values(t_env *e)
 	e->p->k_r = 0.353;
 	e->p->k_i = 0.288;
 	e->w = -HALF_W;
-	if (e->fract == SHIP)
-		e->h = -(WIN_H / 1.5);
-	else
-		e->h = -HALF_H;
+	e->h = -HALF_H;
 	e->img->i_max = 25;
 	e->lock = 0;
+	e->cos = 0;
 }
 
 void	error_fractol(char *err)
@@ -71,8 +69,11 @@ void	error_fractol(char *err)
 
 void	quit_fractol(t_env *e)
 {
+	free(e->p);
+	free(e->img);
 	mlx_destroy_image(e->mlx_ptr, e->img_ptr);
 	mlx_destroy_window(e->mlx_ptr, e->win_ptr);
+	free(e);
 	exit(EXIT_SUCCESS);
 }
 

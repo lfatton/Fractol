@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:08:44 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/21 19:51:22 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/25 17:51:03 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@
 # define MANDEL 1
 # define JULIA 2
 # define SHIP 3
-# define TRI 4
+# define BJULIA 4
+# define TRI 5
 
 # if __APPLE__
 #  define ESC 53
@@ -72,6 +73,7 @@
 #  define KEY_S 1
 #  define KEY_R 15
 #  define KEY_F 3
+#  define KEY_C 8
 #  define KEY_DOT 47
 #  define KEY_SPACE 49
 # else
@@ -99,6 +101,7 @@
 #  define KEY_S 115
 #  define KEY_R 114
 #  define KEY_F 102
+#  define KEY_C 99
 #  define KEY_DOT 46
 #  define KEY_SPACE 32
 # endif
@@ -122,6 +125,8 @@ typedef struct	s_point
 	double		c_i;
 	double		z_r;
 	double		z_i;
+	double		z_r2;
+	double		z_i2;
 	double		k_r;
 	double		k_i;
 	int			x;
@@ -133,13 +138,14 @@ typedef struct	s_env
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*img_ptr;
-	int		*img_str;
+	int			*img_str;
 	int			fract;
-	double			w;
-	double			h;
+	double		w;
+	double		h;
 	int			x;
 	int			y;
 	int			lock;
+	int			cos;
 	t_img		*img;
 	t_point		*p;
 }				t_env;
@@ -156,11 +162,14 @@ void			init_fractol(t_env *e, char *str);
 void			mandelbrot(t_env *e);
 void			julia(t_env *e);
 void			burning_ship(t_env *e);
+void			burning_julia(t_env *e);
 void			sierpinsky_triangle(t_env *e);
 
+int				get_rgb(t_env *e, int i);
 int				get_color(t_env *e, int i);
-int				get_RGB(t_env *e, int i);
-void			create_pix(t_env *e, int col);
+void			pow_coords(t_env *e);
+void			get_coords(t_env *e);
+void			create_image(t_env *e);
 void			print_image(t_env *e);
 
 void			zoom(t_env *e, int key, int x, int y);

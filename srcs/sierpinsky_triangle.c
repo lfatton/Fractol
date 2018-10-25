@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/23 16:00:59 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/23 18:56:58 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/25 17:50:55 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sierpinsky_triangle(t_env *e)
 {
-	int		i;
+	int	i;
 	int	x;
 	int	y;
 
@@ -30,12 +30,9 @@ void	sierpinsky_triangle(t_env *e)
 				x += 2;
 				y += 2;
 			}
-			e->p->x = x;
-			e->p->y = y;
-			create_pix(e, WHITE);
+			e->img_str[x + (y * WIN_W)] = WHITE;
 			x++;
 		}
 		y++;
 	}
-
 }

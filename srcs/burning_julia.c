@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   burning_ship.c                                     :+:      :+:    :+:   */
+/*   burning_julia.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/15 14:16:59 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/25 16:01:14 by lfatton          ###   ########.fr       */
+/*   Created: 2018/10/25 17:21:31 by lfatton           #+#    #+#             */
+/*   Updated: 2018/10/25 17:51:00 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	burning_ship(t_env *e)
+void	burning_julia(t_env *e)
 {
 	int		i;
 	double	tmp;
+	double	prev_z_r;
+	double	prev_z_i;
 
 	while (++e->p->y < WIN_H)
 	{
@@ -27,9 +29,11 @@ void	burning_ship(t_env *e)
 			while ((e->p->z_r2 + e->p->z_i2 <= 4) && ++i < e->img->i_max)
 			{
 				pow_coords(e);
-				tmp = e->p->z_r2 - e->p->z_i2 + e->p->c_r;
-				e->p->z_i = ft_dabs(2 * e->p->z_r * e->p->z_i) + e->p->c_i;
-				e->p->z_r = (tmp);
+				prev_z_r = e->p->z_r;
+				prev_z_i = e->p->z_i;
+				tmp = e->p->z_r2 - e->p->z_i2 + e->p->k_r;
+				e->p->z_i = ft_dabs(2 * prev_z_r * prev_z_i) + e->p->k_i;
+				e->p->z_r = tmp;
 			}
 			e->img_str[e->p->x + (e->p->y * WIN_W)] = get_color(e, i);
 		}
