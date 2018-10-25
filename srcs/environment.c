@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:11:45 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/25 17:50:50 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/25 19:13:08 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,15 @@ int		key_hook(int key, t_env *e)
 	if (key == PAD_ADD || key == PAD_SUB)
 		zoom(e, key, 0, 0);
 	if (key == KEY_A || key == KEY_D || key == KEY_W || key == KEY_S)
-		toggle_k(e, key);
+		toggle_k(e, key, 0, 0);
 	if (key == UP_ARROW || key == DOWN_ARROW || key == LEFT_ARROW
 		|| key == RIGHT_ARROW)
 		move_window(e, key);
-	if (key == PAD_1 || key == PAD_2 || key == PAD_3)
+	if (key == PAD_1 || key == PAD_2 || key == PAD_3 || key == PAD_4
+			|| key == PAD_5 || key == PAD_6)
 		change_color(e, key);
 	if (key == KEY_1 || key == KEY_2 || key == KEY_3 || key == KEY_4
-		|| 	key == KEY_5 || key == KEY_C)
+		|| key == KEY_5 || key == KEY_C)
 		change_fractal(e, key);
 	if (key == KEY_R)
 		reset(e);
@@ -46,6 +47,13 @@ int		mouse_hook(int btn, int x, int y, t_env *e)
 		if (btn == ZOOM_IN || btn == ZOOM_OUT)
 			zoom(e, btn, x, y);
 	}
+	return (0);
+}
+
+int		mouse_motion(int x, int y, t_env *e)
+{
+	if (e->lock)
+		toggle_k(e, -1, x, y);
 	return (0);
 }
 
@@ -67,7 +75,7 @@ void	error_fractol(char *err)
 	exit(EXIT_FAILURE);
 }
 
-void	quit_fractol(t_env *e)
+int		quit_fractol(t_env *e)
 {
 	free(e->p);
 	free(e->img);
@@ -75,13 +83,15 @@ void	quit_fractol(t_env *e)
 	mlx_destroy_window(e->mlx_ptr, e->win_ptr);
 	free(e);
 	exit(EXIT_SUCCESS);
+	return (0);
 }
 
 void	init_fractol(t_env *e, char *str)
 {
 	e->mlx_ptr = mlx_init();
 	e->win_ptr = mlx_new_window(e->mlx_ptr, WIN_W, WIN_H, str);
+	mlx_do_key_autorepeaton(e->mlx_ptr);
 	set_values(e);
-	e->img->c = RED;
+	e->img->c = SMOOTH;
 	print_image(e);
 }

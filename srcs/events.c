@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 22:38:46 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/25 17:50:57 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/25 19:13:12 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,25 @@ void	zoom(t_env *e, int key, int x, int y)
 	print_image(e);
 }
 
-void	toggle_k(t_env *e, int key)
+void	toggle_k(t_env *e, int key, int x, int y)
 {
-	if (key == KEY_A)
-		e->p->k_r -= 0.005;
-	else if (key == KEY_D)
-		e->p->k_r += 0.005;
-	else if (key == KEY_W)
-		e->p->k_i += 0.005;
+	if (key != -1)
+	{
+		if (key == KEY_A)
+			e->p->k_r -= 0.005;
+		else if (key == KEY_D)
+			e->p->k_r += 0.005;
+		else if (key == KEY_W)
+			e->p->k_i += 0.005;
+		else
+			e->p->k_i -= 0.005;
+	}
 	else
-		e->p->k_i -= 0.005;
+	{
+printf("%d %d \n", x, y);
+		e->p->k_r += x;
+		e->p->k_i += y;
+	}
 	mlx_destroy_image(e->mlx_ptr, e->img_ptr);
 	print_image(e);
 }
@@ -73,11 +82,17 @@ void	change_iter(t_env *e, int btn)
 void	change_color(t_env *e, int key)
 {
 	if (key == PAD_1)
-		e->img->c = RED;
-	else if (key == PAD_2)
-		e->img->c = GREEN;
-	else if (key == PAD_3)
 		e->img->c = BLUE;
+	else if (key == PAD_2)
+		e->img->c = RED;
+	else if (key == PAD_3)
+		e->img->c = GREEN;
+	else if (key == PAD_4)
+		e->img->c = SMOOTH;
+	else if (key == PAD_5)
+		e->img->c = SMOOTH2;
+	else if (key == PAD_6)
+		e->img->c = SMOOTH3;
 	mlx_destroy_image(e->mlx_ptr, e->img_ptr);
 	print_image(e);
 }

@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:08:44 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/25 17:51:03 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/10/25 19:13:19 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,12 @@
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
 
-# define RED 1
-# define GREEN 2
-# define BLUE 3
+# define BLUE 1
+# define RED 2
+# define GREEN 3
+# define SMOOTH 4
+# define SMOOTH2 5
+# define SMOOTH3 6
 
 # define MANDEL 1
 # define JULIA 2
@@ -154,9 +157,10 @@ int				get_fractal_name(t_env *e, char *str);
 
 int				key_hook(int key, t_env *e);
 int				mouse_hook(int btn, int x, int y, t_env *e);
+int				mouse_motion(int x, int y, t_env *e);
 void			set_values(t_env *e);
 void			error_fractol(char *err);
-void			quit_fractol(t_env *e);
+int				quit_fractol(t_env *e);
 void			init_fractol(t_env *e, char *str);
 
 void			mandelbrot(t_env *e);
@@ -166,6 +170,7 @@ void			burning_julia(t_env *e);
 void			sierpinsky_triangle(t_env *e);
 
 int				get_rgb(t_env *e, int i);
+int				get_smooth_rgb(t_env *e, int i);
 int				get_color(t_env *e, int i);
 void			pow_coords(t_env *e);
 void			get_coords(t_env *e);
@@ -173,7 +178,7 @@ void			create_image(t_env *e);
 void			print_image(t_env *e);
 
 void			zoom(t_env *e, int key, int x, int y);
-void			toggle_k(t_env *e, int key);
+void			toggle_k(t_env *e, int key, int x, int y);
 void			move_window(t_env *e, int key);
 void			change_iter(t_env *e, int btn);
 void			change_color(t_env *e, int key);
