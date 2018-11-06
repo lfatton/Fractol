@@ -52,8 +52,12 @@ int		mouse_hook(int btn, int x, int y, t_env *e)
 
 int		mouse_motion(int x, int y, t_env *e)
 {
+	e->prev_mouse_x = e->mouse_x;
+	e->prev_mouse_y = e->mouse_y;
+	e->mouse_x = x;
+	e->mouse_y = y;
 	if (e->lock)
-		toggle_k(e, -1, x, y);
+		toggle_k(e, -1, e->prev_mouse_x - e->mouse_x, e->prev_mouse_y - e->mouse_y);
 	return (0);
 }
 
@@ -92,6 +96,6 @@ void	init_fractol(t_env *e, char *str)
 	e->win_ptr = mlx_new_window(e->mlx_ptr, WIN_W, WIN_H, str);
 	mlx_do_key_autorepeaton(e->mlx_ptr);
 	set_values(e);
-	e->img->c = SMOOTH;
+	e->img->c = SMOOTHB;
 	print_image(e);
 }

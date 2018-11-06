@@ -41,9 +41,9 @@
 # define BLUE 1
 # define RED 2
 # define GREEN 3
-# define SMOOTH 4
-# define SMOOTH2 5
-# define SMOOTH3 6
+# define SMOOTHB 4
+# define SMOOTHR 5
+# define SMOOTHG 6
 
 # define MANDEL 1
 # define JULIA 2
@@ -147,6 +147,10 @@ typedef struct	s_env
 	double		h;
 	int			x;
 	int			y;
+	double			prev_mouse_x;
+	double			prev_mouse_y;
+	double			mouse_x;
+	double			mouse_y;
 	int			lock;
 	int			cos;
 	t_img		*img;
@@ -178,7 +182,7 @@ void			create_image(t_env *e);
 void			print_image(t_env *e);
 
 void			zoom(t_env *e, int key, int x, int y);
-void			toggle_k(t_env *e, int key, int x, int y);
+void			toggle_k(t_env *e, int key, double x, double y);
 void			move_window(t_env *e, int key);
 void			change_iter(t_env *e, int btn);
 void			change_color(t_env *e, int key);

@@ -50,9 +50,9 @@ int		get_smooth_rgb(t_env *e, int i)
 	r = (int)(9 * (1 - ratio) * ratio * ratio * ratio * 255);
 	g = (int)(15 * (1 - ratio) * (1 - ratio) * ratio * ratio * 255);
 	b = (int)(8.5 * (1 - ratio) * (1 - ratio) * (1 - ratio) * ratio * 255);
-	if (e->img->c == SMOOTH2)
+	if (e->img->c == SMOOTHR)
 		return ((b << 16) + (r << 8) + g);
-	else if (e->img->c == SMOOTH3)
+	else if (e->img->c == SMOOTHG)
 		return ((g << 16) + (b << 8) + r);
 	return ((r << 16) + (g << 8) + b);
 }
@@ -65,7 +65,7 @@ int		get_color(t_env *e, int i)
 	j = -1;
 	if (e->img->c == BLUE || e->img->c == RED || e->img->c == GREEN)
 		return (get_rgb(e, i));
-	else if (e->img->c == SMOOTH || e->img->c == SMOOTH2 || e->img->c == SMOOTH3)
+	else if (e->img->c == SMOOTHB || e->img->c == SMOOTHR || e->img->c == SMOOTHG)
 		return (get_smooth_rgb(e, i));
 	col = (int*)malloc(sizeof(int) * e->img->i_max);
 	while (++j < e->img->i_max)
@@ -122,8 +122,8 @@ void	create_image(t_env *e)
 void	print_image(t_env *e)
 {
 	e->p->y = -1;
-	mlx_hook(e->win_ptr, 2, 0, key_hook, e);
-	mlx_hook(e->win_ptr, 4, 0, mouse_hook, e);
+	mlx_hook(e->win_ptr, 2, 5, key_hook, e);
+	mlx_hook(e->win_ptr, 4, 1L << 2,  mouse_hook, e);
 	mlx_hook(e->win_ptr, 6, 1L << 6, mouse_motion, e);
 	mlx_hook(e->win_ptr, 17, 1L << 17, quit_fractol, e);
 	create_image(e);

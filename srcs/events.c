@@ -32,7 +32,7 @@ void	zoom(t_env *e, int key, int x, int y)
 	print_image(e);
 }
 
-void	toggle_k(t_env *e, int key, int x, int y)
+void	toggle_k(t_env *e, int key, double x, double y)
 {
 	if (key != -1)
 	{
@@ -47,9 +47,8 @@ void	toggle_k(t_env *e, int key, int x, int y)
 	}
 	else
 	{
-printf("%d %d \n", x, y);
-		e->p->k_r += x;
-		e->p->k_i += y;
+		e->p->k_r += x / e->img->zoom;
+		e->p->k_i += y / e->img->zoom;
 	}
 	mlx_destroy_image(e->mlx_ptr, e->img_ptr);
 	print_image(e);
@@ -88,11 +87,11 @@ void	change_color(t_env *e, int key)
 	else if (key == PAD_3)
 		e->img->c = GREEN;
 	else if (key == PAD_4)
-		e->img->c = SMOOTH;
+		e->img->c = SMOOTHB;
 	else if (key == PAD_5)
-		e->img->c = SMOOTH2;
+		e->img->c = SMOOTHR;
 	else if (key == PAD_6)
-		e->img->c = SMOOTH3;
+		e->img->c = SMOOTHG;
 	mlx_destroy_image(e->mlx_ptr, e->img_ptr);
 	print_image(e);
 }
