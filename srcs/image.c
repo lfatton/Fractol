@@ -87,8 +87,8 @@ void	get_coords(t_env *e)
 	{
 		e->p->z_r = 0;
 		e->p->z_i = 0;
-		e->p->c_r = (e->p->x + e->w) / e->img->zoom;
-		e->p->c_i = (e->p->y + e->h) / e->img->zoom;
+		e->p->c_r = (double)e->p->x / e->img->zoom + e->w;
+		e->p->c_i = (double)e->p->y / e->img->zoom + e->h;
 		if (e->cos)
 		{
 			e->p->c_r = cos(e->p->c_r);
@@ -97,8 +97,8 @@ void	get_coords(t_env *e)
 	}
 	else if (e->fract == JULIA || e->fract == BJULIA)
 	{
-		e->p->z_r = (e->p->x + e->w) / e->img->zoom;
-		e->p->z_i = (e->p->y + e->h) / e->img->zoom;
+		e->p->z_r = (double)e->p->x / e->img->zoom + e->w;
+		e->p->z_i = (double)e->p->y / e->img->zoom + e->h;
 		if (e->cos)
 		{
 			e->p->z_r = cos(e->p->z_r);

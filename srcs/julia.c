@@ -15,7 +15,6 @@
 void	julia(t_env *e)
 {
 	int		i;
-	double	tmp;
 	double	prev_z_r;
 	double	prev_z_i;
 
@@ -28,12 +27,13 @@ void	julia(t_env *e)
 			get_coords(e);
 			while ((e->p->z_r2 + e->p->z_i2 <= 4) && ++i < e->img->i_max)
 			{
-				pow_coords(e);
 				prev_z_r = e->p->z_r;
 				prev_z_i = e->p->z_i;
-				tmp = e->p->z_r2 - e->p->z_i2 + e->p->k_r;
-				e->p->z_i = 2 * prev_z_r * prev_z_i + e->p->k_i;
-				e->p->z_r = tmp;
+				e->p->z_i = prev_z_r * prev_z_i;
+				e->p->z_i += e->p->z_i;
+				e->p->z_i += e->p->k_i;
+				e->p->z_r = e->p->z_r2 - e->p->z_i2 + e->p->k_r;
+				pow_coords(e);
 			}
 			e->img_str[e->p->x + (e->p->y * WIN_W)] = get_color(e, i);
 		}

@@ -30,8 +30,8 @@
 
 # define WIN_W 1920
 # define WIN_H 1080
-# define HALF_W WIN_W / 2
-# define HALF_H WIN_H / 2
+# define HALF_W WIN_W / 2.0
+# define HALF_H WIN_H / 2.0
 # define R 1.05
 # define RATIO_W (WIN_W - WIN_W / R) / 2
 

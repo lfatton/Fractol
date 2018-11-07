@@ -15,7 +15,6 @@
 void	burning_ship(t_env *e)
 {
 	int		i;
-	double	tmp;
 
 	while (++e->p->y < WIN_H)
 	{
@@ -26,10 +25,9 @@ void	burning_ship(t_env *e)
 			get_coords(e);
 			while ((e->p->z_r2 + e->p->z_i2 <= 4) && ++i < e->img->i_max)
 			{
-				pow_coords(e);
-				tmp = e->p->z_r2 - e->p->z_i2 + e->p->c_r;
 				e->p->z_i = ft_dabs(2 * e->p->z_r * e->p->z_i) + e->p->c_i;
-				e->p->z_r = (tmp);
+				e->p->z_r = e->p->z_r2 - e->p->z_i2 + e->p->c_r;
+				pow_coords(e);
 			}
 			e->img_str[e->p->x + (e->p->y * WIN_W)] = get_color(e, i);
 		}

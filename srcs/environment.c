@@ -66,8 +66,8 @@ void	set_values(t_env *e)
 	e->img->zoom = 300;
 	e->p->k_r = 0.353;
 	e->p->k_i = 0.288;
-	e->w = -HALF_W;
-	e->h = -HALF_H;
+	e->w = -HALF_W / e->img->zoom;
+	e->h = -HALF_H / e->img->zoom;
 	e->img->i_max = 25;
 	e->lock = 0;
 	e->cos = 0;
