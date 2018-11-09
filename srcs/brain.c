@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   julia.c                                            :+:      :+:    :+:   */
+/*   brain.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-void	julia(void *env)
+void	brain(void *env)
 {
 	int		i;
 	t_env		*e;
@@ -27,10 +27,10 @@ void	julia(void *env)
 			get_coords(e);
 			while ((e->p->z_r2 + e->p->z_i2 <= 4) && ++i < e->img->i_max)
 			{
+				e->p->z_i = (e->p->z_i > 0 ? -e->p->z_i : e->p->z_i);
 				e->p->prev_z_r = e->p->z_r;
 				e->p->prev_z_i = e->p->z_i;
-				e->p->z_i = e->p->prev_z_r * e->p->prev_z_i;
-				e->p->z_i += e->p->z_i;
+				e->p->z_i =  2 * e->p->prev_z_r * e->p->prev_z_i;
 				e->p->z_i += e->p->k_i;
 				e->p->z_r = e->p->z_r2 - e->p->z_i2 + e->p->k_r;
 				pow_coords(e);
@@ -39,3 +39,4 @@ void	julia(void *env)
 		}
 	}
 }
+

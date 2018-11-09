@@ -12,10 +12,12 @@
 
 #include "fractol.h"
 
-void	mandelbrot(t_env *e)
+void	mandelbrot(void *env)
 {
 	int		i;
+	t_env		*e;
 
+	e = (t_env*)env;
 	while (++e->p->y < WIN_H)
 	{
 		e->p->x = -1;

@@ -83,7 +83,7 @@ void	pow_coords(t_env *e)
 
 void	get_coords(t_env *e)
 {
-	if (e->fract == MANDEL || e->fract == SHIP)
+	if (e->fract == MANDEL || e->fract == SHIP || e->fract == TRI)
 	{
 		e->p->z_r = 0;
 		e->p->z_i = 0;
@@ -95,7 +95,7 @@ void	get_coords(t_env *e)
 			e->p->c_i = cos(e->p->c_i);
 		}
 	}
-	else if (e->fract == JULIA || e->fract == BJULIA)
+	else if (e->fract == JULIA || e->fract == BJULIA || e->fract == BRAIN)
 	{
 		e->p->z_r = (double)e->p->x / e->img->zoom + e->w;
 		e->p->z_i = (double)e->p->y / e->img->zoom + e->h;
@@ -117,26 +117,29 @@ void	create_image(t_env *e)
 
 	e->img_ptr = mlx_new_image(e->mlx_ptr, WIN_W, WIN_H);
 	e->img_str = (int*)mlx_get_data_addr(e->img_ptr, &bpp, &s_l, &endian);
+	e->fractal_function((void*)e);
+}
+
+void	*multithread(void *env)
+{	t_env	*e;
+
+	e = (t_env*)env;
+	pthread_exit(NULL);
 }
 
 void	print_image(t_env *e)
 {
+	int	i;
+
+	i = -1;
 	e->p->y = -1;
-	mlx_hook(e->win_ptr, 2, 5, key_hook, e);
-	mlx_hook(e->win_ptr, 4, 1L << 2,  mouse_hook, e);
-	mlx_hook(e->win_ptr, 6, 1L << 6, mouse_motion, e);
-	mlx_hook(e->win_ptr, 17, 1L << 17, quit_fractol, e);
 	create_image(e);
-	if (e->fract == MANDEL)
-		mandelbrot(e);
-	else if (e->fract == JULIA)
-		julia(e);
-	else if (e->fract == SHIP)
-		burning_ship(e);
-	else if (e->fract == BJULIA)
-		burning_julia(e);
-	else if (e->fract == TRI)
-		sierpinsky_triangle(e);
+	while (++i < THREADS)
+		if (pthread_create(&e->thrds[i], NULL, multithread, e))
+			error_fractol("cannot create thread");
+	i = -1;
+	while (++i > THREADS)
+		if (pthread_join(e->thrds[i], NULL))
+			error_fractol("cannot join threads");
 	mlx_put_image_to_window(e->mlx_ptr, e->win_ptr, e->img_ptr, 0, 0);
-	mlx_loop(e->mlx_ptr);
 }

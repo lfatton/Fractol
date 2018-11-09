@@ -12,10 +12,13 @@
 
 #include "fractol.h"
 
-void	burning_ship(t_env *e)
+void	burning_ship(void *env)
 {
 	int		i;
 
+	t_env           *e;
+
+	e = (t_env*)env;
 	while (++e->p->y < WIN_H)
 	{
 		e->p->x = -1;

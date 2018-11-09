@@ -43,7 +43,7 @@ void	bresenham(t_env *e, int x0, int y0, int x1, int y1)
 	}
 }
 
-void	sierpinsky_triangle(t_env *e)
+void	sierpinsky_triangle(void *env)
 {
 	int	i;
 	int	x;
@@ -52,7 +52,9 @@ void	sierpinsky_triangle(t_env *e)
 	int	y1;
 	int	x2;
 	int	y2;
-
+	t_env           *e;
+	
+	e = (t_env*)env;
 	x = WIN_W / 2;
 	y = 0;
 	x1 = WIN_W - 1;

@@ -29,7 +29,7 @@ int		key_hook(int key, t_env *e)
 			|| key == PAD_5 || key == PAD_6)
 		change_color(e, key);
 	if (key == KEY_1 || key == KEY_2 || key == KEY_3 || key == KEY_4
-		|| key == KEY_5 || key == KEY_C)
+		|| key == KEY_5 || key == KEY_6 || key == KEY_C)
 		change_fractal(e, key);
 	if (key == KEY_R)
 		reset(e);

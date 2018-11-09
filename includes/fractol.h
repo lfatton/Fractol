@@ -15,25 +15,20 @@
 
 # include "mlx.h"
 # include "libft.h"
-# include <unistd.h>
+
 # include <stdlib.h>
-# include <stdio.h>
-# include <errno.h>
-# include <string.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
 # include <math.h>
-# include <limits.h>
+# include <pthread.h>
 
 # include <stdio.h>
 
+
+# define THREADS 4
 # define WIN_W 1920
 # define WIN_H 1080
 # define HALF_W WIN_W / 2.0
 # define HALF_H WIN_H / 2.0
 # define R 1.05
-# define RATIO_W (WIN_W - WIN_W / R) / 2
 
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
@@ -50,6 +45,13 @@
 # define SHIP 3
 # define BJULIA 4
 # define TRI 5
+# define BRAIN 6
+
+# define LEFT_BUTTON 1
+# define RIGHT_BUTTON 3
+# define ZOOM_IN 4
+# define ZOOM_OUT 5
+# define ZOOM_LOCK 2
 
 # if __APPLE__
 #  define ESC 53
@@ -58,6 +60,9 @@
 #  define KEY_3 20
 #  define KEY_4 21
 #  define KEY_5 23
+#  define KEY_6 22
+#  define KEY_7 26
+#  define KEY_8 28
 #  define UP_ARROW 126
 #  define DOWN_ARROW 125
 #  define LEFT_ARROW 123
@@ -86,6 +91,9 @@
 #  define KEY_3 51
 #  define KEY_4 52
 #  define KEY_5 53
+#  define KEY_6 54
+#  define KEY_7 55
+#  define KEY_8 56
 #  define UP_ARROW 65362
 #  define DOWN_ARROW 65364
 #  define LEFT_ARROW 65361
@@ -109,12 +117,6 @@
 #  define KEY_SPACE 32
 # endif
 
-# define LEFT_BUTTON 1
-# define RIGHT_BUTTON 3
-# define ZOOM_IN 4
-# define ZOOM_OUT 5
-# define ZOOM_LOCK 2
-
 typedef struct	s_img
 {
 	int			c;
@@ -126,6 +128,8 @@ typedef struct	s_point
 {
 	double		c_r;
 	double		c_i;
+	double		prev_z_r;
+	double		prev_z_i;
 	double		z_r;
 	double		z_i;
 	double		z_r2;
@@ -135,6 +139,8 @@ typedef struct	s_point
 	int			x;
 	int			y;
 }				t_point;
+
+typedef void	(*t_fract)(void *e);
 
 typedef struct	s_env
 {
@@ -155,6 +161,8 @@ typedef struct	s_env
 	int			cos;
 	t_img		*img;
 	t_point		*p;
+	t_fract		fractal_function;
+	pthread_t	thrds[THREADS];
 }				t_env;
 
 int				get_fractal_name(t_env *e, char *str);
@@ -167,17 +175,19 @@ void			error_fractol(char *err);
 int				quit_fractol(t_env *e);
 void			init_fractol(t_env *e, char *str);
 
-void			mandelbrot(t_env *e);
-void			julia(t_env *e);
-void			burning_ship(t_env *e);
-void			burning_julia(t_env *e);
-void			sierpinsky_triangle(t_env *e);
+void			mandelbrot(void *env);
+void			julia(void *env);
+void			burning_ship(void *env);
+void			burning_julia(void *env);
+void			tricorn(void *env);
+void			brain(void *env);
 
 int				get_rgb(t_env *e, int i);
 int				get_smooth_rgb(t_env *e, int i);
 int				get_color(t_env *e, int i);
 void			pow_coords(t_env *e);
 void			get_coords(t_env *e);
+void			*multithread(void *env);
 void			create_image(t_env *e);
 void			print_image(t_env *e);
 

@@ -12,12 +12,12 @@
 
 #include "fractol.h"
 
-void	burning_julia(t_env *e)
+void	burning_julia(void *env)
 {
 	int		i;
-	double	prev_z_r;
-	double	prev_z_i;
-
+	t_env           *e;
+	
+	e = (t_env*)env;
 	while (++e->p->y < WIN_H)
 	{
 		e->p->x = -1;
@@ -27,9 +27,9 @@ void	burning_julia(t_env *e)
 			get_coords(e);
 			while ((e->p->z_r2 + e->p->z_i2 <= 4) && ++i < e->img->i_max)
 			{
-				prev_z_r = e->p->z_r;
-				prev_z_i = e->p->z_i;
-				e->p->z_i = ft_dabs(2 * prev_z_r * prev_z_i) + e->p->k_i;
+				e->p->prev_z_r = e->p->z_r;
+				e->p->prev_z_i = e->p->z_i;
+				e->p->z_i = ft_dabs(2 * e->p->prev_z_r * e->p->prev_z_i) + e->p->k_i;
 				e->p->z_r = e->p->z_r2 - e->p->z_i2 + e->p->k_r;
 				pow_coords(e);
 			}
