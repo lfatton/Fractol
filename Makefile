@@ -53,7 +53,7 @@ endif
 
 LIBFT_INCL_PATH = ./libft/includes
 
-INCLS = $(addprefix $(INCL_PATH)/,$(INCL_NAME))
+INCL = $(addprefix $(INCL_PATH)/,$(INCL_NAME))
 
 IFLAGS = -I $(INCL_PATH) -I $(LIBFT_INCL_PATH) -I $(MLX_INCL_PATH)
 
@@ -69,32 +69,32 @@ RM = rm -rf
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(INCLS)
-	$(MAKE) -C $(MLX_NAME)
-	$(MAKE) -C libft
-	$(CC) $(OBJS) $(LDLIBFT) $(LDLMX) $(MLXFLAGS) $(LIBS) -o $@
+$(NAME): $(OBJS) $(INCL)
+	@$(MAKE) -C $(MLX_NAME)
+	@$(MAKE) -C libft
+	@$(CC) $(OBJS) $(LDLIBFT) $(LDLMX) $(MLXFLAGS) $(LIBS) -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
-	$(CC) $(CFLAGS) $(IFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) $(IFLAGS) -o $@ -c $<
 
 run: $(NAME)
 	./$(NAME) julia
 
 norm:
-	norminette $(SRCS) $(INCLS)
+	norminette $(SRCS) $(INCL)
 
 git: fclean
 	git add -A
 	git status
 
 clean:
-	$(RM) $(OBJS)
+	@$(RM) $(OBJS)
 	@rmdir $(OBJ_PATH) 2> /dev/null || true
 
 fclean: clean
-	$(RM) $(NAME)
-	$(MAKE) -C libft fclean
-	$(MAKE) -C $(MLX_NAME) clean
+	@$(RM) $(NAME)
+	@$(MAKE) -C libft fclean
+	@$(MAKE) -C $(MLX_NAME) clean
 
 re: fclean all

@@ -12,19 +12,12 @@
 
 #include "fractol.h"
 
-void	julia(void *env)
+void	julia(t_env *e, int x, int y)
 {
 	int		i;
-	t_env		*e;
 
-	e = (t_env*)env;
-	while (++e->p->y < WIN_H)
-	{
-		e->p->x = -1;
-		while (++e->p->x < WIN_W)
-		{
 			i = -1;
-			get_coords(e);
+			get_coords(e, x, y);
 			while ((e->p->z_r2 + e->p->z_i2 <= 4) && ++i < e->img->i_max)
 			{
 				e->p->prev_z_r = e->p->z_r;
@@ -35,7 +28,5 @@ void	julia(void *env)
 				e->p->z_r = e->p->z_r2 - e->p->z_i2 + e->p->k_r;
 				pow_coords(e);
 			}
-			e->img_str[e->p->x + (e->p->y * WIN_W)] = get_color(e, i);
-		}
-	}
+			e->img_str[x + (y * WIN_W)] = get_color(e, i);
 }

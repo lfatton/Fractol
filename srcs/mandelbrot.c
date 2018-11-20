@@ -12,19 +12,16 @@
 
 #include "fractol.h"
 
-void	mandelbrot(void *env)
+void	mandelbrot(t_env *e, int x, int y)
 {
 	int		i;
-	t_env		*e;
-
-	e = (t_env*)env;
-	while (++e->p->y < WIN_H)
-	{
-		e->p->x = -1;
-		while (++e->p->x < WIN_W)
-		{
 			i = -1;
-			get_coords(e);
+			e->p->z_r = 0;
+                 e->p->z_i = 0;
+                 e->p->c_r = x / e->img->zoom + e->w;
+                 e->p->c_i = y / e->img->zoom + e->h;
+e->p->z_r2 = e->p->z_r * e->p->z_r;
+        e->p->z_i2 = e->p->z_i * e->p->z_i;
 			while ((e->p->z_r2 + e->p->z_i2 <= 4) && ++i < e->img->i_max)
 			{
 				e->p->z_i = e->p->z_r * e->p->z_i;
@@ -33,7 +30,5 @@ void	mandelbrot(void *env)
 				e->p->z_r = e->p->z_r2 - e->p->z_i2 + e->p->c_r;
 				pow_coords(e);
 			}
-			e->img_str[e->p->x + (e->p->y * WIN_W)] = get_color(e, i);
-		}
-	}
+			e->img_str[y * WIN_W + x] = get_color(e, i);
 }

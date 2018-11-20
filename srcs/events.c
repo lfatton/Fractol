@@ -28,7 +28,7 @@ void	zoom(t_env *e, int key, int x, int y)
 		e->w = x / (e->img->zoom * R) + e->w - x / e->img->zoom;
 		e->h = y / (e->img->zoom * R) + e->h - y / e->img->zoom;
 	}
-	print_image(e);
+	create_image(e);
 }
 
 void	toggle_k(t_env *e, int key, double x, double y)
@@ -49,7 +49,7 @@ void	toggle_k(t_env *e, int key, double x, double y)
 		e->p->k_r += x / e->img->zoom;
 		e->p->k_i += y / e->img->zoom;
 	}
-	print_image(e);
+	create_image(e);
 }
 
 void	move_window(t_env *e, int key)
@@ -62,7 +62,7 @@ void	move_window(t_env *e, int key)
 		e->w -= 10;
 	else
 		e->w += 10;
-	print_image(e);
+	create_image(e);
 }
 
 void	change_iter(t_env *e, int btn)
@@ -71,7 +71,7 @@ void	change_iter(t_env *e, int btn)
 		e->img->i_max += 1;
 	else if (btn == RIGHT_BUTTON && e->img->i_max > 4)
 		e->img->i_max -= 1;
-	print_image(e);
+	create_image(e);
 }
 
 void	change_color(t_env *e, int key)
@@ -88,31 +88,31 @@ void	change_color(t_env *e, int key)
 		e->img->c = SMOOTHR;
 	else if (key == PAD_6)
 		e->img->c = SMOOTHG;
-	print_image(e);
+	create_image(e);
 }
 
 void	change_fractal(t_env *e, int key)
 {
 	if (key == KEY_1 && (e->fract = MANDEL))
-		e->fractal_function = &mandelbrot;
+		e->fract_funct = &mandelbrot;
 	else if (key == KEY_2 && (e->fract = JULIA))
-		e->fractal_function = &julia;
+		e->fract_funct = &julia;
 	else if (key == KEY_3 && (e->fract = SHIP))
-		e->fractal_function = &burning_ship;
+		e->fract_funct = &burning_ship;
 	else if (key == KEY_4 && (e->fract = BJULIA))
-		e->fractal_function = &burning_julia;
+		e->fract_funct = &burning_julia;
 	else if (key == KEY_5 && (e->fract = TRI))
-		e->fractal_function = &tricorn;
+		e->fract_funct = &tricorn;
 	else if (key == KEY_6 && (e->fract = BRAIN))
-		e->fractal_function = &brain;
+		e->fract_funct = &brain;
 	set_values(e);
 	if (key == KEY_C)
 		e->cos = 1;
-	print_image(e);
+	create_image(e);
 }
 
 void	reset(t_env *e)
 {
 	set_values(e);
-	print_image(e);
+	create_image(e);
 }

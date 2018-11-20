@@ -15,17 +15,17 @@
 int	get_fractal_name(t_env *e, char *str)
 {
 	if ((!ft_strcmp(str, "mandelbrot")) && (e->fract = MANDEL))
-		e->fractal_function = &mandelbrot;
+		e->fract_funct = &mandelbrot;
 	else if ((!ft_strcmp(str, "julia")) && (e->fract = JULIA))
-		e->fractal_function = &julia;
+		e->fract_funct = &julia;
 	else if ((!ft_strcmp(str, "burning_ship")) && (e->fract = SHIP))
-		e->fractal_function = &burning_ship;
+		e->fract_funct = &burning_ship;
 	else if ((!ft_strcmp(str, "burning_julia")) && (e->fract = BJULIA))
-		e->fractal_function = &burning_julia;
+		e->fract_funct = &burning_julia;
 	else if ((!ft_strcmp(str, "tricorn")) && (e->fract = TRI))
-		e->fractal_function = &tricorn;
+		e->fract_funct = &tricorn;
 	else if ((!ft_strcmp(str, "brain")) && (e->fract = BRAIN))
-		e->fractal_function = &brain;
+		e->fract_funct = &brain;
 	else
 		return (0);
 	return (e->fract);
@@ -33,20 +33,20 @@ int	get_fractal_name(t_env *e, char *str)
 
 int	main(int ac, char **av)
 {
-	t_env	*e;
+	t_env	e;
 
-	e = (t_env*)malloc(sizeof(t_env));
-	e->img = (t_img*)malloc(sizeof(t_img));
-	e->p = (t_point*)malloc(sizeof(t_point));
-	if (ac != 2 || !get_fractal_name(e, av[1]))
+	e = *(t_env*)malloc(sizeof(t_env));
+	e.img = (t_img*)malloc(sizeof(t_img));
+	e.p = (t_point*)malloc(sizeof(t_point));
+	if (ac != 2 || !get_fractal_name(&e, av[1]))
 		error_fractol("usage: ./fractol [mandelbrot/julia/burning_ship"
 				"/burning_julia/tricorn/ducks]");
-	init_fractol(e, av[1]);
-	mlx_hook(e->win_ptr, 2, 5, key_hook, e);
-        mlx_hook(e->win_ptr, 4, 1L << 2,  mouse_hook, e);
-        mlx_hook(e->win_ptr, 6, 1L << 6, mouse_motion, e);
-        mlx_hook(e->win_ptr, 17, 1L << 17, quit_fractol, e);
-	mlx_loop(e->mlx_ptr);
+	init_fractol(&e, av[1]);
+	mlx_hook(e.win_ptr, 2, 5, key_hook, &e);
+        mlx_hook(e.win_ptr, 4, 1L << 2,  mouse_hook, &e);
+        mlx_hook(e.win_ptr, 6, 1L << 6, mouse_motion, &e);
+        mlx_hook(e.win_ptr, 17, 1L << 17, quit_fractol, &e);
+	mlx_loop(e.mlx_ptr);
 	pthread_exit(NULL);
 	return (EXIT_SUCCESS);
 }

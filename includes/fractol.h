@@ -23,7 +23,7 @@
 # include <stdio.h>
 
 
-# define THREADS 4
+# define THREADS 8
 # define WIN_W 1920
 # define WIN_H 1080
 # define HALF_W WIN_W / 2.0
@@ -140,8 +140,6 @@ typedef struct	s_point
 	int			y;
 }				t_point;
 
-typedef void	(*t_fract)(void *e);
-
 typedef struct	s_env
 {
 	void		*mlx_ptr;
@@ -159,11 +157,19 @@ typedef struct	s_env
 	double			mouse_y;
 	int			lock;
 	int			cos;
+	int			thrds_x;
+	int			thrds_y;
+	void		(*fract_funct)(struct s_env *e, int x, int y);
 	t_img		*img;
 	t_point		*p;
-	t_fract		fractal_function;
-	pthread_t	thrds[THREADS];
 }				t_env;
+
+typedef struct		s_thrds
+{
+	t_env			*e;
+	int			i;
+}				t_thrds;
+
 
 int				get_fractal_name(t_env *e, char *str);
 
@@ -175,19 +181,19 @@ void			error_fractol(char *err);
 int				quit_fractol(t_env *e);
 void			init_fractol(t_env *e, char *str);
 
-void			mandelbrot(void *env);
-void			julia(void *env);
-void			burning_ship(void *env);
-void			burning_julia(void *env);
-void			tricorn(void *env);
-void			brain(void *env);
+void			mandelbrot(t_env *e, int x, int y);
+void			julia(t_env *e, int x, int y);
+void			burning_ship(t_env *e, int x, int y);
+void			burning_julia(t_env *e, int x, int y);
+void			tricorn(t_env *e, int x, int y);
+void			brain(t_env *e, int x, int y);
 
 int				get_rgb(t_env *e, int i);
 int				get_smooth_rgb(t_env *e, int i);
 int				get_color(t_env *e, int i);
 void			pow_coords(t_env *e);
-void			get_coords(t_env *e);
-void			*multithread(void *env);
+void			get_coords(t_env *e, int x, int y);
+void			*multithread(t_thrds *fract_thrds);
 void			create_image(t_env *e);
 void			print_image(t_env *e);
 

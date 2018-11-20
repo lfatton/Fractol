@@ -85,7 +85,6 @@ int		quit_fractol(t_env *e)
 	free(e->img);
 	mlx_destroy_image(e->mlx_ptr, e->img_ptr);
 	mlx_destroy_window(e->mlx_ptr, e->win_ptr);
-	free(e);
 	exit(EXIT_SUCCESS);
 	return (0);
 }
@@ -97,5 +96,5 @@ void	init_fractol(t_env *e, char *str)
 	mlx_do_key_autorepeaton(e->mlx_ptr);
 	set_values(e);
 	e->img->c = SMOOTHB;
-	print_image(e);
+	create_image(e);
 }

@@ -81,14 +81,14 @@ void	pow_coords(t_env *e)
 	e->p->z_i2 = e->p->z_i * e->p->z_i;
 }
 
-void	get_coords(t_env *e)
+void	get_coords(t_env *e, int x, int y)
 {
 	if (e->fract == MANDEL || e->fract == SHIP || e->fract == TRI)
 	{
 		e->p->z_r = 0;
 		e->p->z_i = 0;
-		e->p->c_r = (double)e->p->x / e->img->zoom + e->w;
-		e->p->c_i = (double)e->p->y / e->img->zoom + e->h;
+		e->p->c_r = x / e->img->zoom + e->w;
+		e->p->c_i = y / e->img->zoom + e->h;
 		if (e->cos)
 		{
 			e->p->c_r = cos(e->p->c_r);
@@ -97,8 +97,8 @@ void	get_coords(t_env *e)
 	}
 	else if (e->fract == JULIA || e->fract == BJULIA || e->fract == BRAIN)
 	{
-		e->p->z_r = (double)e->p->x / e->img->zoom + e->w;
-		e->p->z_i = (double)e->p->y / e->img->zoom + e->h;
+		e->p->z_r = x / e->img->zoom + e->w;
+		e->p->z_i = y / e->img->zoom + e->h;
 		if (e->cos)
 		{
 			e->p->z_r = cos(e->p->z_r);
@@ -117,29 +117,50 @@ void	create_image(t_env *e)
 
 	e->img_ptr = mlx_new_image(e->mlx_ptr, WIN_W, WIN_H);
 	e->img_str = (int*)mlx_get_data_addr(e->img_ptr, &bpp, &s_l, &endian);
-	e->fractal_function((void*)e);
+	print_image(e);
 }
 
-void	*multithread(void *env)
-{	t_env	*e;
+void	*multithread(t_thrds *fract_thrds)
+{	
+	int	x;
+	int	y;
 
-	e = (t_env*)env;
-	pthread_exit(NULL);
+	y = WIN_H / THREADS * fract_thrds->i;
+	while (y < WIN_H / THREADS * (fract_thrds->i + 1))
+	{
+		x = 0;
+		while (x < WIN_W)
+		{
+			fract_thrds->e->fract_funct(fract_thrds->e, x, y);
+			x++;
+		}
+		y++;
+	}
+	free(fract_thrds->e);
+	free(fract_thrds);
+	return (NULL);
 }
 
 void	print_image(t_env *e)
 {
+	pthread_t	thrds[THREADS];
+	t_thrds		*fract_thrds;
 	int	i;
 
-	i = -1;
+	i = 0;
 	e->p->y = -1;
-	create_image(e);
-	while (++i < THREADS)
-		if (pthread_create(&e->thrds[i], NULL, multithread, e))
+	while (i < THREADS)
+	{
+		fract_thrds = (t_thrds*)malloc(sizeof(t_thrds));
+		fract_thrds->i = i;
+		fract_thrds->e = (t_env*)malloc(sizeof(t_env));
+		ft_memcpy(fract_thrds->e, e, sizeof(t_env));
+		if (pthread_create(&thrds[i], NULL, (void*)multithread, fract_thrds))
 			error_fractol("cannot create thread");
-	i = -1;
-	while (++i > THREADS)
-		if (pthread_join(e->thrds[i], NULL))
+		i++;
+	}
+	while (i--)
+		if (pthread_join(thrds[i], NULL))
 			error_fractol("cannot join threads");
 	mlx_put_image_to_window(e->mlx_ptr, e->win_ptr, e->img_ptr, 0, 0);
 }
