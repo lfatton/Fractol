@@ -81,10 +81,11 @@ void	error_fractol(char *err)
 
 int		quit_fractol(t_env *e)
 {
+	mlx_destroy_image(e->mlx_ptr, e->img->ptr);
+	mlx_destroy_window(e->mlx_ptr, e->win_ptr);
 	free(e->p);
 	free(e->img);
-	mlx_destroy_image(e->mlx_ptr, e->img_ptr);
-	mlx_destroy_window(e->mlx_ptr, e->win_ptr);
+	free(e);
 	exit(EXIT_SUCCESS);
 	return (0);
 }
@@ -97,4 +98,5 @@ void	init_fractol(t_env *e, char *str)
 	set_values(e);
 	e->img->c = SMOOTHB;
 	create_image(e);
+	print_image(e);
 }

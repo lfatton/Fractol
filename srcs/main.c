@@ -33,20 +33,20 @@ int	get_fractal_name(t_env *e, char *str)
 
 int	main(int ac, char **av)
 {
-	t_env	e;
+	t_env	*e;
 
-	e = *(t_env*)malloc(sizeof(t_env));
-	e.img = (t_img*)malloc(sizeof(t_img));
-	e.p = (t_point*)malloc(sizeof(t_point));
-	if (ac != 2 || !get_fractal_name(&e, av[1]))
+	e = (t_env*)malloc(sizeof(t_env));
+	e->img = (t_img*)malloc(sizeof(t_img));
+	e->p = (t_point*)malloc(sizeof(t_point));
+	if (ac != 2 || !get_fractal_name(e, av[1]))
 		error_fractol("usage: ./fractol [mandelbrot/julia/burning_ship"
 				"/burning_julia/tricorn/ducks]");
-	init_fractol(&e, av[1]);
-	mlx_hook(e.win_ptr, 2, 5, key_hook, &e);
-        mlx_hook(e.win_ptr, 4, 1L << 2,  mouse_hook, &e);
-        mlx_hook(e.win_ptr, 6, 1L << 6, mouse_motion, &e);
-        mlx_hook(e.win_ptr, 17, 1L << 17, quit_fractol, &e);
-	mlx_loop(e.mlx_ptr);
+	init_fractol(e, av[1]);
+	mlx_hook(e->win_ptr, 2, 5, key_hook, e);
+        mlx_hook(e->win_ptr, 4, 1L << 2,  mouse_hook, e);
+        mlx_hook(e->win_ptr, 6, 1L << 6, mouse_motion, e);
+        mlx_hook(e->win_ptr, 17, 1L << 17, quit_fractol, e);
+	mlx_loop(e->mlx_ptr);
 	pthread_exit(NULL);
 	return (EXIT_SUCCESS);
 }

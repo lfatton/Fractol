@@ -115,9 +115,8 @@ void	create_image(t_env *e)
 	int	s_l;
 	int	endian;
 
-	e->img_ptr = mlx_new_image(e->mlx_ptr, WIN_W, WIN_H);
-	e->img_str = (int*)mlx_get_data_addr(e->img_ptr, &bpp, &s_l, &endian);
-	print_image(e);
+	e->img->ptr = mlx_new_image(e->mlx_ptr, WIN_W, WIN_H);
+	e->img->str = (int*)mlx_get_data_addr(e->img->ptr, &bpp, &s_l, &endian);
 }
 
 void	*multithread(t_thrds *fract_thrds)
@@ -125,19 +124,17 @@ void	*multithread(t_thrds *fract_thrds)
 	int	x;
 	int	y;
 
-	y = WIN_H / THREADS * fract_thrds->i;
-	while (y < WIN_H / THREADS * (fract_thrds->i + 1))
+	y = 0; //WIN_H / THREADS * fract_thrds->i;
+	while (y < WIN_H / THREADS)// * (fract_thrds->i + 1))
 	{
 		x = 0;
 		while (x < WIN_W)
 		{
-			fract_thrds->e->fract_funct(fract_thrds->e, x, y);
+			fract_thrds->e->fract_funct(fract_thrds->e, x, y + WIN_H / THREADS * fract_thrds->i);
 			x++;
 		}
 		y++;
 	}
-	free(fract_thrds->e);
-	free(fract_thrds);
 	return (NULL);
 }
 
@@ -162,5 +159,7 @@ void	print_image(t_env *e)
 	while (i--)
 		if (pthread_join(thrds[i], NULL))
 			error_fractol("cannot join threads");
-	mlx_put_image_to_window(e->mlx_ptr, e->win_ptr, e->img_ptr, 0, 0);
+	mlx_put_image_to_window(e->mlx_ptr, e->win_ptr, e->img->ptr, 0, 0);
+	free(fract_thrds->e);
+	free(fract_thrds);
 }

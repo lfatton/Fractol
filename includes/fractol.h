@@ -119,6 +119,8 @@
 
 typedef struct	s_img
 {
+	void		*ptr;
+	int			*str;
 	int			c;
 	double		zoom;
 	int			i_max;
@@ -144,8 +146,6 @@ typedef struct	s_env
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	void		*img_ptr;
-	int			*img_str;
 	int			fract;
 	double		w;
 	double		h;
