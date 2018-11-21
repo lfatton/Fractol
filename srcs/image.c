@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:14:07 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/25 19:13:06 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/21 22:38:58 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,11 @@ void	create_image(t_env *e)
 	e->img->str = (int*)mlx_get_data_addr(e->img->ptr, &bpp, &s_l, &endian);
 }
 
-void	*multithread(t_thrds *fract_thrds)
-{	
+void	*multithread(t_thrds *fract_thrds){
 	int	x;
 	int	y;
 
+	printf("%d\n", fract_thrds->i);
 	y = 0; //WIN_H / THREADS * fract_thrds->i;
 	while (y < WIN_H / THREADS)// * (fract_thrds->i + 1))
 	{
@@ -137,7 +137,6 @@ void	*multithread(t_thrds *fract_thrds)
 	}
 	return (NULL);
 }
-
 void	print_image(t_env *e)
 {
 	pthread_t	thrds[THREADS];
@@ -159,6 +158,24 @@ void	print_image(t_env *e)
 	while (i--)
 		if (pthread_join(thrds[i], NULL))
 			error_fractol("cannot join threads");
+	if (e->fract == MANDEL)
+	{
+	int y = 0;
+	while (y < WIN_H)
+	{
+		int x = 0;
+		while (x < WIN_W)
+		{
+			if (e->img->pix[x + y * WIN_W] == e->img->i_max)
+				e->img->str[x + (y * WIN_W)] = WHITE;
+			else
+				e->img->str[x + (y * WIN_W)] = BLACK;
+
+			x++;
+		}
+		y++;
+	}
+	}
 	mlx_put_image_to_window(e->mlx_ptr, e->win_ptr, e->img->ptr, 0, 0);
 	free(fract_thrds->e);
 	free(fract_thrds);

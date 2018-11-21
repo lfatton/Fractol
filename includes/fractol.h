@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:08:44 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/25 19:13:19 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/21 22:38:50 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@
 
 # include <stdio.h>
 
-
-# define THREADS 8
+# define THREADS 4
 # define WIN_W 1920
 # define WIN_H 1080
 # define HALF_W WIN_W / 2.0
@@ -124,6 +123,7 @@ typedef struct	s_img
 	int			c;
 	double		zoom;
 	int			i_max;
+	int			*pix;
 }				t_img;
 
 typedef struct	s_point
@@ -159,7 +159,7 @@ typedef struct	s_env
 	int			cos;
 	int			thrds_x;
 	int			thrds_y;
-	void		(*fract_funct)(struct s_env *e, int x, int y);
+	void			(*fract_funct)(struct s_env *e, int x, int y);
 	t_img		*img;
 	t_point		*p;
 }				t_env;
@@ -181,7 +181,7 @@ void			error_fractol(char *err);
 int				quit_fractol(t_env *e);
 void			init_fractol(t_env *e, char *str);
 
-void			mandelbrot(t_env *e, int x, int y);
+void				mandelbrot(t_env *e, int x, int y);
 void			julia(t_env *e, int x, int y);
 void			burning_ship(t_env *e, int x, int y);
 void			burning_julia(t_env *e, int x, int y);

@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:11:45 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/25 19:13:08 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/21 22:38:56 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	init_fractol(t_env *e, char *str)
 	mlx_do_key_autorepeaton(e->mlx_ptr);
 	set_values(e);
 	e->img->c = SMOOTHB;
+	e->img->pix = (int*)malloc(sizeof(int) * WIN_W * WIN_H);
 	create_image(e);
 	print_image(e);
 }

@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 22:38:46 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/25 19:13:12 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/21 22:38:52 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void	toggle_k(t_env *e, int key, double x, double y)
 void	move_window(t_env *e, int key)
 {
 	if (key == UP_ARROW)
-		e->h -= 10;
+		e->h -= 0.1;
 	else if (key == DOWN_ARROW)
-		e->h += 10;
+		e->h += 0.1;
 	else if (key == LEFT_ARROW)
-		e->w -= 10;
+		e->w -= 0.1;
 	else
-		e->w += 10;
+		e->w += 0.1;
 	print_image(e);
 }
 
