@@ -46,6 +46,7 @@ int		get_smooth_rgb(t_env *e, int i)
 	int		g;
 	int		b;
 	double	ratio;
+
 	ratio = (double)i / (double)e->img->i_max;
 	r = (int)(9 * (1 - ratio) * ratio * ratio * ratio * 255);
 	g = (int)(15 * (1 - ratio) * (1 - ratio) * ratio * ratio * 255);
@@ -57,56 +58,80 @@ int		get_smooth_rgb(t_env *e, int i)
 	return ((r << 16) + (g << 8) + b);
 }
 
+int		get_psyche(int i, int i_max)
+{
+	if (i > 0 && i < i_max)
+	{
+		while (i > NBCOL)
+			i /= NBCOL;
+		if (i <= 1)
+			return (0x1DAF22);
+		else if (i <= 2)
+			return (0x7AE7C7);
+		else if (i <= 3)
+			return (0xD81E5B);
+		else if (i <= 4)
+			return (0xF7B32B);
+		else if (i <= 5)
+			return (0xEF3E36);
+		else if (i <= 6)
+			return (0x3B14FF);
+		else if (i <= 7)
+			return (0xFFEF42);
+		else if (i <= 8)
+			return (0xB143E0);
+		else if (i <= 9)
+			return (0x300000);
+		return (0xC4ACBE);
+	}
+	return (0X00747);
+}
+
 int		get_color(t_env *e, int i)
 {
-	int	*col;
-	int j;
-
-	j = -1;
 	if (e->img->c == BLUE || e->img->c == RED || e->img->c == GREEN)
 		return (get_rgb(e, i));
 	else if (e->img->c == SMOOTHB || e->img->c == SMOOTHR || e->img->c == SMOOTHG)
 		return (get_smooth_rgb(e, i));
-	col = (int*)malloc(sizeof(int) * e->img->i_max);
-	while (++j < e->img->i_max)
-	{
-		col[j] = i;
-	}
-	return (col[i]);
+	else if (e->img->c == BW && i == e->img->i_max)
+		return (WHITE);
+	else if (e->img->c == PSYCHE)
+			return (get_psyche(i, e->img->i_max));
+	return (BLACK);
 }
 
-void	pow_coords(t_env *e)
+void	pow_coords(t_point *p)
 {
-	e->p->z_r2 = e->p->z_r * e->p->z_r;
-	e->p->z_i2 = e->p->z_i * e->p->z_i;
+	p->z_r2 = p->z_r * p->z_r;
+	p->z_i2 = p->z_i * p->z_i;
 }
 
-void	get_coords(t_env *e, int x, int y)
+void	get_coords(t_env *e, t_point *p, int x, int y)
 {
 	if (e->fract == MANDEL || e->fract == SHIP || e->fract == TRI)
 	{
-		e->p->z_r = 0;
-		e->p->z_i = 0;
-		e->p->c_r = x / e->img->zoom + e->w;
-		e->p->c_i = y / e->img->zoom + e->h;
+		p->z_r = 0;
+		p->z_i = 0;
+		p->c_r = x / e->img->zoom + e->w;
+		p->c_i = y / e->img->zoom + e->h;
 		if (e->cos)
 		{
-			e->p->c_r = cos(e->p->c_r);
-			e->p->c_i = cos(e->p->c_i);
+			p->c_r = cos(p->c_r);
+			p->c_i = cos(p->c_i);
 		}
 	}
 	else if (e->fract == JULIA || e->fract == BJULIA || e->fract == BRAIN)
 	{
-		e->p->z_r = x / e->img->zoom + e->w;
-		e->p->z_i = y / e->img->zoom + e->h;
+		p->z_r = x / e->img->zoom + e->w;
+		p->z_i = y / e->img->zoom + e->h;
 		if (e->cos)
 		{
-			e->p->z_r = cos(e->p->z_r);
-			e->p->z_i = cos(e->p->z_i);
+			p->z_r = cos(p->z_r);
+			p->z_i = cos(p->z_i);
 		}
 	}
-	e->p->z_r2 = e->p->z_r * e->p->z_r;
-	e->p->z_i2 = e->p->z_i * e->p->z_i;
+	p->z_r2 = p->z_r * p->z_r;
+	p->z_i2 = p->z_i * p->z_i;
 }
 
 void	create_image(t_env *e)
@@ -123,14 +148,13 @@ void	*multithread(t_thrds *fract_thrds){
 	int	x;
 	int	y;
 
-	printf("%d\n", fract_thrds->i);
-	y = 0; //WIN_H / THREADS * fract_thrds->i;
-	while (y < WIN_H / THREADS)// * (fract_thrds->i + 1))
+	y = WIN_H / THREADS * fract_thrds->i;
+	while (y < WIN_H / THREADS * (fract_thrds->i + 1))
 	{
 		x = 0;
 		while (x < WIN_W)
 		{
-			fract_thrds->e->fract_funct(fract_thrds->e, x, y + WIN_H / THREADS * fract_thrds->i);
+			fract_thrds->e->fract_funct(fract_thrds->e, x, y);
 			x++;
 		}
 		y++;
@@ -144,7 +168,6 @@ void	print_image(t_env *e)
 	int	i;
 
 	i = 0;
-	e->p->y = -1;
 	while (i < THREADS)
 	{
 		fract_thrds = (t_thrds*)malloc(sizeof(t_thrds));
@@ -158,24 +181,6 @@ void	print_image(t_env *e)
 	while (i--)
 		if (pthread_join(thrds[i], NULL))
 			error_fractol("cannot join threads");
-	if (e->fract == MANDEL)
-	{
-	int y = 0;
-	while (y < WIN_H)
-	{
-		int x = 0;
-		while (x < WIN_W)
-		{
-			if (e->img->pix[x + y * WIN_W] == e->img->i_max)
-				e->img->str[x + (y * WIN_W)] = WHITE;
-			else
-				e->img->str[x + (y * WIN_W)] = BLACK;
-
-			x++;
-		}
-		y++;
-	}
-	}
 	mlx_put_image_to_window(e->mlx_ptr, e->win_ptr, e->img->ptr, 0, 0);
 	free(fract_thrds->e);
 	free(fract_thrds);

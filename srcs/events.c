@@ -76,7 +76,9 @@ void	change_iter(t_env *e, int btn)
 
 void	change_color(t_env *e, int key)
 {
-	if (key == PAD_1)
+	if (key == PAD_0)
+		e->img->c = BW;
+	else if (key == PAD_1)
 		e->img->c = BLUE;
 	else if (key == PAD_2)
 		e->img->c = RED;
@@ -88,6 +90,8 @@ void	change_color(t_env *e, int key)
 		e->img->c = SMOOTHR;
 	else if (key == PAD_6)
 		e->img->c = SMOOTHG;
+	else if (key == PAD_8)
+		e->img->c = PSYCHE;
 	print_image(e);
 }
 
@@ -106,8 +110,8 @@ void	change_fractal(t_env *e, int key)
 	else if (key == KEY_6 && (e->fract = BRAIN))
 		e->fract_funct = &brain;
 	set_values(e);
-	if (key == KEY_C)
-		e->cos = 1;
+	if (key == KEY_C && (e->cos = 1))
+		e->img->zoom = 100;
 	print_image(e);
 }
 

@@ -14,18 +14,20 @@
 
 void	tricorn(t_env *e, int x, int y)
 {
+	t_point		*p;
 	int		i;
 
-			i = -1;
-			get_coords(e, x, y);
-			while ((e->p->z_r2 + e->p->z_i2 <= 4) && ++i < e->img->i_max)
-			{
-				e->p->z_i = -(e->p->z_r * e->p->z_i);
-				e->p->z_i += e->p->z_i;
-				e->p->z_i += e->p->c_i;
-				e->p->z_r = e->p->z_r2 - e->p->z_i2 + e->p->c_r;
-				pow_coords(e);
-		}	
-			e->img->str[x + (y * WIN_W)] = get_color(e, i);
+	p = (t_point*)malloc(sizeof(t_point));
+        ft_memcpy(p, e->p, sizeof(t_point));
+	get_coords(e, p, x, y);
+	i = -1;
+	while ((p->z_r2 + p->z_i2 <= 4) && ++i < e->img->i_max)
+	{
+		p->z_i = -(p->z_r * p->z_i) * 2 + p->c_i;
+		p->z_r = p->z_r2 - p->z_i2 + p->c_r;
+		pow_coords(p);
+	}
+	e->img->str[x + y * WIN_W] = get_color(e, i);
+	free(p);
 }
 

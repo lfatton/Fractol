@@ -22,7 +22,7 @@
 
 # include <stdio.h>
 
-# define THREADS 4
+# define THREADS 8
 # define WIN_W 1920
 # define WIN_H 1080
 # define HALF_W WIN_W / 2.0
@@ -32,12 +32,15 @@
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
 
+# define BW 0
 # define BLUE 1
 # define RED 2
 # define GREEN 3
 # define SMOOTHB 4
 # define SMOOTHR 5
 # define SMOOTHG 6
+# define PSYCHE 8
+# define NBCOL 10
 
 # define MANDEL 1
 # define JULIA 2
@@ -68,12 +71,14 @@
 #  define RIGHT_ARROW 124
 #  define PAD_ADD 69
 #  define PAD_SUB 78
+#  define PAD_0 82
 #  define PAD_1 83
 #  define PAD_2 84
 #  define PAD_3 85
 #  define PAD_4 86
 #  define PAD_5 87
 #  define PAD_6 88
+#  define PAD_8 91
 #  define KEY_A 0
 #  define KEY_D 2
 #  define KEY_W 13
@@ -99,12 +104,14 @@
 #  define RIGHT_ARROW 65363
 #  define PAD_ADD 65451
 #  define PAD_SUB 65453
+#  define PAD_0 65438
 #  define PAD_1 65436
 #  define PAD_2 65433
 #  define PAD_3 65435
 #  define PAD_4 65430
 #  define PAD_5 65437
 #  define PAD_6 65432
+#  define PAD_8 65431
 #  define KEY_A 97
 #  define KEY_D 100
 #  define KEY_W 119
@@ -123,7 +130,6 @@ typedef struct	s_img
 	int			c;
 	double		zoom;
 	int			i_max;
-	int			*pix;
 }				t_img;
 
 typedef struct	s_point
@@ -138,8 +144,6 @@ typedef struct	s_point
 	double		z_i2;
 	double		k_r;
 	double		k_i;
-	int			x;
-	int			y;
 }				t_point;
 
 typedef struct	s_env
@@ -181,7 +185,7 @@ void			error_fractol(char *err);
 int				quit_fractol(t_env *e);
 void			init_fractol(t_env *e, char *str);
 
-void				mandelbrot(t_env *e, int x, int y);
+void			mandelbrot(t_env *e, int x, int y);
 void			julia(t_env *e, int x, int y);
 void			burning_ship(t_env *e, int x, int y);
 void			burning_julia(t_env *e, int x, int y);
@@ -191,8 +195,8 @@ void			brain(t_env *e, int x, int y);
 int				get_rgb(t_env *e, int i);
 int				get_smooth_rgb(t_env *e, int i);
 int				get_color(t_env *e, int i);
-void			pow_coords(t_env *e);
-void			get_coords(t_env *e, int x, int y);
+void			pow_coords(t_point *p);
+void			get_coords(t_env *e, t_point *p, int x, int y);
 void			*multithread(t_thrds *fract_thrds);
 void			create_image(t_env *e);
 void			print_image(t_env *e);

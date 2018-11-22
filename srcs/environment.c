@@ -25,8 +25,8 @@ int		key_hook(int key, t_env *e)
 	if (key == UP_ARROW || key == DOWN_ARROW || key == LEFT_ARROW
 		|| key == RIGHT_ARROW)
 		move_window(e, key);
-	if (key == PAD_1 || key == PAD_2 || key == PAD_3 || key == PAD_4
-			|| key == PAD_5 || key == PAD_6)
+	if (key == PAD_0 || key == PAD_1 || key == PAD_2 || key == PAD_3 ||
+		key == PAD_4 || key == PAD_5 || key == PAD_6 || key == PAD_8)
 		change_color(e, key);
 	if (key == KEY_1 || key == KEY_2 || key == KEY_3 || key == KEY_4
 		|| key == KEY_5 || key == KEY_6 || key == KEY_C)
@@ -64,11 +64,24 @@ int		mouse_motion(int x, int y, t_env *e)
 void	set_values(t_env *e)
 {
 	e->img->zoom = 300;
-	e->p->k_r = 0.353;
-	e->p->k_i = 0.288;
+	if (e->fract == BRAIN)
+	{
+		e->p->k_r = 0.293;
+		e->p->k_i = 0.298;
+	}
+	else if (e->fract == JULIA)
+	{
+		e->p->k_r = -0.748;
+		e->p->k_i = -0.086;
+	}
+	else if (e->fract == BJULIA)
+	{
+		e->p->k_r = -0.67;
+		e->p->k_i = -1.087;
+	}
 	e->w = -HALF_W / e->img->zoom;
 	e->h = -HALF_H / e->img->zoom;
-	e->img->i_max = 25;
+	e->img->i_max = 50;
 	e->lock = 0;
 	e->cos = 0;
 }
@@ -97,7 +110,6 @@ void	init_fractol(t_env *e, char *str)
 	mlx_do_key_autorepeaton(e->mlx_ptr);
 	set_values(e);
 	e->img->c = SMOOTHB;
-	e->img->pix = (int*)malloc(sizeof(int) * WIN_W * WIN_H);
 	create_image(e);
 	print_image(e);
 }
