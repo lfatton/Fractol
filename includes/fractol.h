@@ -39,7 +39,9 @@
 # define SMOOTHB 4
 # define SMOOTHR 5
 # define SMOOTHG 6
-# define PSYCHE 8
+# define PSYCHE 7
+# define PSYALT 8
+# define DARK 9
 # define NBCOL 10
 
 # define MANDEL 1
@@ -78,7 +80,9 @@
 #  define PAD_4 86
 #  define PAD_5 87
 #  define PAD_6 88
+#  define PAD_7 89
 #  define PAD_8 91
+#  define PAD_9 92
 #  define KEY_A 0
 #  define KEY_D 2
 #  define KEY_W 13
@@ -111,7 +115,9 @@
 #  define PAD_4 65430
 #  define PAD_5 65437
 #  define PAD_6 65432
+#  define PAD_7 65429
 #  define PAD_8 65431
+#  define PAD_9 65434
 #  define KEY_A 97
 #  define KEY_D 100
 #  define KEY_W 119
@@ -192,9 +198,8 @@ void			burning_julia(t_env *e, int x, int y);
 void			tricorn(t_env *e, int x, int y);
 void			brain(t_env *e, int x, int y);
 
-int				get_rgb(t_env *e, int i);
-int				get_smooth_rgb(t_env *e, int i);
-int				get_color(t_env *e, int i);
+int				get_color(int color, int i, int i_max);
+
 void			pow_coords(t_point *p);
 void			get_coords(t_env *e, t_point *p, int x, int y);
 void			*multithread(t_thrds *fract_thrds);

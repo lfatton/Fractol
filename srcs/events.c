@@ -90,8 +90,12 @@ void	change_color(t_env *e, int key)
 		e->img->c = SMOOTHR;
 	else if (key == PAD_6)
 		e->img->c = SMOOTHG;
-	else if (key == PAD_8)
+	else if (key == PAD_7)
 		e->img->c = PSYCHE;
+	else if (key == PAD_8)
+		e->img->c = PSYALT;
+	else if (key == PAD_9)
+		e->img->c = DARK;
 	print_image(e);
 }
 

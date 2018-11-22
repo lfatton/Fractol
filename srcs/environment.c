@@ -26,7 +26,8 @@ int		key_hook(int key, t_env *e)
 		|| key == RIGHT_ARROW)
 		move_window(e, key);
 	if (key == PAD_0 || key == PAD_1 || key == PAD_2 || key == PAD_3 ||
-		key == PAD_4 || key == PAD_5 || key == PAD_6 || key == PAD_8)
+		key == PAD_4 || key == PAD_5 || key == PAD_6 || key == PAD_7
+		|| key == PAD_8 || key == PAD_9)
 		change_color(e, key);
 	if (key == KEY_1 || key == KEY_2 || key == KEY_3 || key == KEY_4
 		|| key == KEY_5 || key == KEY_6 || key == KEY_C)
@@ -92,7 +93,7 @@ void	error_fractol(char *err)
 	exit(EXIT_FAILURE);
 }
 
-int		quit_fractol(t_env *e)
+int	quit_fractol(t_env *e)
 {
 	mlx_destroy_image(e->mlx_ptr, e->img->ptr);
 	mlx_destroy_window(e->mlx_ptr, e->win_ptr);
@@ -109,7 +110,7 @@ void	init_fractol(t_env *e, char *str)
 	e->win_ptr = mlx_new_window(e->mlx_ptr, WIN_W, WIN_H, str);
 	mlx_do_key_autorepeaton(e->mlx_ptr);
 	set_values(e);
-	e->img->c = SMOOTHB;
+	e->img->c = BW;
 	create_image(e);
 	print_image(e);
 }

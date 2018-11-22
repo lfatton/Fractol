@@ -29,6 +29,6 @@ void	burning_julia(t_env *e, int x, int y)
 		p->z_r = p->z_r2 - p->z_i2 + p->k_r;
 		pow_coords(p);
 	}
-	e->img->str[x + y * WIN_W] = get_color(e, i);
+	e->img->str[x + y * WIN_W] = get_color(e->img->c, i, e->img->i_max);
 	free(p);
 }

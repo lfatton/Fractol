@@ -20,6 +20,7 @@ SRC_NAME =	main.c \
 			environment.c \
 			events.c \
 			image.c \
+			colors.c \
 			mandelbrot.c \
 			julia.c \
 			burning_ship.c \
