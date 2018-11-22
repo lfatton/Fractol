@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 22:38:46 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/21 22:38:52 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/22 22:46:38 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	change_fractal(t_env *e, int key)
 
 void	reset(t_env *e)
 {
+printf("k_r %f k_i %f\n", e->p->k_r, e->p->k_i);
 	set_values(e);
 	print_image(e);
 }

@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:08:44 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/21 22:38:50 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/22 22:48:21 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,25 +161,24 @@ typedef struct	s_env
 	double		h;
 	int			x;
 	int			y;
-	double			prev_mouse_x;
-	double			prev_mouse_y;
-	double			mouse_x;
-	double			mouse_y;
+	double		prev_mouse_x;
+	double		prev_mouse_y;
+	double		mouse_x;
+	double		mouse_y;
 	int			lock;
 	int			cos;
 	int			thrds_x;
 	int			thrds_y;
-	void			(*fract_funct)(struct s_env *e, int x, int y);
+	void		(*fract_funct)(struct s_env *e, int x, int y);
 	t_img		*img;
 	t_point		*p;
 }				t_env;
 
-typedef struct		s_thrds
+typedef struct	s_thrds
 {
-	t_env			*e;
+	t_env		*e;
 	int			i;
 }				t_thrds;
-
 
 int				get_fractal_name(t_env *e, char *str);
 
