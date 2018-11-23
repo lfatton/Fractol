@@ -36,6 +36,7 @@ SRC_NAME = ft_putchar.c \
 		   ft_strstr.c \
 		   ft_strnstr.c \
 		   ft_abs.c \
+		   ft_pow.c \
 		   ft_dabs.c \
 		   ft_isspace.c \
 		   ft_isblank.c \

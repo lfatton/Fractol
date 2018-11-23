@@ -50,6 +50,8 @@
 # define BJULIA 4
 # define TRI 5
 # define BRAIN 6
+# define BLOB 7
+# define FROG 8
 
 # define LEFT_BUTTON 1
 # define RIGHT_BUTTON 3
@@ -146,8 +148,6 @@ typedef struct	s_point
 	double		prev_z_i;
 	double		z_r;
 	double		z_i;
-	double		z_r2;
-	double		z_i2;
 	double		k_r;
 	double		k_i;
 }				t_point;
@@ -196,10 +196,11 @@ void			burning_ship(t_env *e, int x, int y);
 void			burning_julia(t_env *e, int x, int y);
 void			tricorn(t_env *e, int x, int y);
 void			brain(t_env *e, int x, int y);
+void			mandelblob(t_env *e, int x, int y);
+void			frog(t_env *e, int x, int y);
 
 int				get_color(int color, int i, int i_max);
 
-void			pow_coords(t_point *p);
 void			get_coords(t_env *e, t_point *p, int x, int y);
 void			*multithread(t_thrds *fract_thrds);
 void			create_image(t_env *e);

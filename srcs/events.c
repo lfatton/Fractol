@@ -113,15 +113,21 @@ void	change_fractal(t_env *e, int key)
 		e->fract_funct = &tricorn;
 	else if (key == KEY_6 && (e->fract = BRAIN))
 		e->fract_funct = &brain;
+	else if (key == KEY_7 && (e->fract = BLOB))
+		e->fract_funct = &mandelblob;
+	else if (key == KEY_8 && (e->fract = FROG))
+		e->fract_funct = &frog;
+	if (key == KEY_C)
+	 	e->cos = (e->cos == 0) ? 1 : 0;
 	set_values(e);
-	if (key == KEY_C && (e->cos = 1))
-		e->img->zoom = 100;
 	print_image(e);
 }
 
 void	reset(t_env *e)
 {
-printf("k_r %f k_i %f\n", e->p->k_r, e->p->k_i);
+	e->img->c = BW;
+	e->img->i_max = 50;
+	e->cos = 0;
 	set_values(e);
 	print_image(e);
 }

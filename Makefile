@@ -27,6 +27,8 @@ SRC_NAME =	main.c \
 			burning_julia.c \
 			tricorn.c \
 			brain.c \
+			mandelblob.c \
+			frog.c \
 
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 

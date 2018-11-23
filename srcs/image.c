@@ -12,15 +12,9 @@
 
 #include "fractol.h"
 
-void	pow_coords(t_point *p)
-{
-	p->z_r2 = p->z_r * p->z_r;
-	p->z_i2 = p->z_i * p->z_i;
-}
-
 void	get_coords(t_env *e, t_point *p, int x, int y)
 {
-	if (e->fract == MANDEL || e->fract == SHIP || e->fract == TRI)
+	if (e->fract == MANDEL || e->fract == SHIP || e->fract == TRI || e->fract == BLOB)
 	{
 		p->z_r = 0;
 		p->z_i = 0;
@@ -32,7 +26,7 @@ void	get_coords(t_env *e, t_point *p, int x, int y)
 			p->c_i = cos(p->c_i);
 		}
 	}
-	else if (e->fract == JULIA || e->fract == BJULIA || e->fract == BRAIN)
+	else if (e->fract == JULIA || e->fract == BJULIA || e->fract == BRAIN || e->fract == FROG)
 	{
 		p->z_r = x / e->img->zoom + e->w;
 		p->z_i = y / e->img->zoom + e->h;
@@ -42,8 +36,6 @@ void	get_coords(t_env *e, t_point *p, int x, int y)
 			p->z_i = cos(p->z_i);
 		}
 	}
-	p->z_r2 = p->z_r * p->z_r;
-	p->z_i2 = p->z_i * p->z_i;
 }
 
 void	create_image(t_env *e)

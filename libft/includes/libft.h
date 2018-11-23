@@ -51,6 +51,7 @@ char			*ft_strstr(const char *dst, const char *src);
 char			*ft_strnstr(const char *dst, const char *src, size_t len);
 int				ft_abs(int value);
 double			ft_dabs(double value);
+double			ft_pow(double value);
 int				ft_isblank(int c);
 int				ft_isspace(int c);
 int				ft_isalpha(int c);

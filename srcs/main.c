@@ -26,6 +26,10 @@ int	get_fractal_name(t_env *e, char *str)
 		e->fract_funct = &tricorn;
 	else if ((!ft_strcmp(str, "brain")) && (e->fract = BRAIN))
 		e->fract_funct = &brain;
+	else if ((!ft_strcmp(str, "mandelblob")) && (e->fract = BLOB))
+		e->fract_funct = &mandelblob;
+	else if ((!ft_strcmp(str, "frog")) && (e->fract = FROG))
+		e->fract_funct = &frog;
 	else
 		return (0);
 	return (e->fract);
@@ -40,7 +44,7 @@ int	main(int ac, char **av)
 	e->p = (t_point*)malloc(sizeof(t_point));
 	if (ac != 2 || !get_fractal_name(e, av[1]))
 		error_fractol("usage: ./fractol [mandelbrot/julia/burning_ship"
-				"/burning_julia/tricorn/ducks]");
+				"/burning_julia/tricorn/brain/mandelblob/frog]");
 	init_fractol(e, av[1]);
 	mlx_hook(e->win_ptr, 2, 5, key_hook, e);
         mlx_hook(e->win_ptr, 4, 1L << 2,  mouse_hook, e);
