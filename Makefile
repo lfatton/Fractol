@@ -6,7 +6,7 @@
 #    By: lfatton <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/30 00:05:23 by lfatton           #+#    #+#              #
-#    Updated: 2018/10/25 17:26:27 by lfatton          ###   ########.fr        #
+#    Updated: 2018/11/23 17:55:14 by lfatton          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@ NAME = fractol
 SRC_PATH = srcs
 
 SRC_NAME =	main.c \
-			environment.c \
+			init.c \
+			hooks.c \
 			hud.c \
-			events.c \
-			image.c \
 			colors.c \
+			image.c \
 			mandelbrot.c \
 			julia.c \
 			burning_ship.c \
@@ -30,6 +30,7 @@ SRC_NAME =	main.c \
 			brain.c \
 			mandelblob.c \
 			frog.c \
+			events.c \
 
 SRCS = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 

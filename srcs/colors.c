@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:23:07 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/22 16:03:56 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/23 17:31:18 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ static int	get_rgb(int color, int i, int i_max)
 
 static int	get_smooth_rgb(int color, int i, int i_max)
 {
-        int		r;
-        int		g;
-        int		b;
-        double	ratio;
-	
+	int		r;
+	int		g;
+	int		b;
+	double	ratio;
+
 	ratio = (double)i / (double)i_max;
 	r = (int)(9 * (1 - ratio) * ratio * ratio * ratio * 255);
 	g = (int)(15 * (1 - ratio) * (1 - ratio) * ratio * ratio * 255);
@@ -117,11 +117,12 @@ static int	get_psyche(int i, int i_max)
 	return (0X00747);
 }
 
-int		get_color(int color, int i, int i_max)
+int			get_color(int color, int i, int i_max)
 {
 	if (color == BLUE || color == RED || color == GREEN)
 		return (get_rgb(color, i, i_max));
-	else if (color == SMOOTHB || color == SMOOTHR || color == SMOOTHG || color == DARK)
+	else if (color == SMOOTHB || color == SMOOTHR || color == SMOOTHG
+			|| color == DARK)
 		return (get_smooth_rgb(color, i, i_max));
 	else if (color == BW && i == i_max)
 		return (WHITE);

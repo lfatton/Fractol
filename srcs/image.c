@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:14:07 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/21 22:38:58 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/23 17:28:55 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	get_coords(t_env *e, t_point *p, int x, int y)
 {
-	if (e->fract == MANDEL || e->fract == SHIP || e->fract == TRI || e->fract == BLOB)
+	if (e->fract == MANDEL || e->fract == SHIP || e->fract == TRI || e->fract
+			== BLOB)
 	{
 		p->z_r = 0;
 		p->z_i = 0;
@@ -26,7 +27,8 @@ void	get_coords(t_env *e, t_point *p, int x, int y)
 			p->c_i = cos(p->c_i);
 		}
 	}
-	else if (e->fract == JULIA || e->fract == BJULIA || e->fract == BRAIN || e->fract == FROG)
+	else if (e->fract == JULIA || e->fract == BJULIA || e->fract == BRAIN
+			|| e->fract == FROG)
 	{
 		p->z_r = x / e->img->zoom + e->w;
 		p->z_i = y / e->img->zoom + e->h;
@@ -48,7 +50,8 @@ void	create_image(t_env *e)
 	e->img->str = (int*)mlx_get_data_addr(e->img->ptr, &bpp, &s_l, &endian);
 }
 
-void	*multithread(t_thrds *fract_thrds){
+void	*multithread(t_thrds *fract_thrds)
+{
 	int	x;
 	int	y;
 
@@ -65,11 +68,12 @@ void	*multithread(t_thrds *fract_thrds){
 	}
 	return (NULL);
 }
+
 void	print_image(t_env *e)
 {
 	pthread_t	thrds[THREADS];
 	t_thrds		*fract_thrds;
-	int	i;
+	int			i;
 
 	i = 0;
 	while (i < THREADS)

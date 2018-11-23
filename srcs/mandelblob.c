@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 09:18:23 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/23 09:34:49 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/23 17:34:05 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	mandelblob(t_env *e, int x, int y)
 {
-	t_point		*p;
+	t_point	*p;
 	int		i;
 
 	p = (t_point*)malloc(sizeof(t_point));
-        ft_memcpy(p, e->p, sizeof(t_point));
+	ft_memcpy(p, e->p, sizeof(t_point));
 	get_coords(e, p, x, y);
 	i = -1;
 	while ((ft_pow(p->z_r) + ft_pow(p->z_i) <= 4) && ++i < e->img->i_max)
@@ -31,4 +31,3 @@ void	mandelblob(t_env *e, int x, int y)
 	e->img->str[x + y * WIN_W] = get_color(e->img->c, i, e->img->i_max);
 	free(p);
 }
-

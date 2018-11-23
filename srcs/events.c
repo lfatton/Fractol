@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/19 22:38:46 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/22 22:46:38 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/23 17:56:25 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,6 @@ void	move_window(t_env *e, int key)
 		e->w += 0.1;
 }
 
-void	change_iter(t_env *e, int btn)
-{
-	if (btn == LEFT_BUTTON)
-		e->img->i_max += 1;
-	else if (btn == RIGHT_BUTTON && e->img->i_max > 4)
-		e->img->i_max -= 1;
-}
-
 void	change_color(t_env *e, int key)
 {
 	if (key == PAD_0)
@@ -113,14 +105,6 @@ void	change_fractal(t_env *e, int key)
 	else if (key == KEY_8 && (e->fract = FROG))
 		e->fract_funct = &frog;
 	if (key == KEY_C)
-	 	e->cos = (e->cos == 0) ? 1 : 0;
-	set_values(e);
-}
-
-void	reset(t_env *e)
-{
-	e->img->c = BW;
-	e->img->i_max = 50;
-	e->cos = 0;
+		e->cos = (e->cos == 0) ? 1 : 0;
 	set_values(e);
 }

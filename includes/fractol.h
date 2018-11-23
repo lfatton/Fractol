@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:08:44 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/22 22:48:21 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/23 17:55:17 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,18 +179,25 @@ typedef struct	s_thrds
 	int			i;
 }				t_thrds;
 
-int				get_fractal_name(t_env *e, char *str);
-
-void			display_hud(t_env *e);
-
-int				expose_hook(t_env *e);
-int				key_hook(int key, t_env *e);
-int				mouse_hook(int btn, int x, int y, t_env *e);
-int				mouse_motion(int x, int y, t_env *e);
 void			set_values(t_env *e);
+void			reset(t_env *e);
 void			error_fractol(char *err);
 int				quit_fractol(t_env *e);
 void			init_fractol(t_env *e, char *str);
+
+int				key_hook(int key, t_env *e);
+int				mouse_hook(int btn, int x, int y, t_env *e);
+int				mouse_motion(int x, int y, t_env *e);
+int				expose_hook(t_env *e);
+
+void			display_hud(t_env *e);
+
+void			get_coords(t_env *e, t_point *p, int x, int y);
+void			*multithread(t_thrds *fract_thrds);
+void			create_image(t_env *e);
+void			print_image(t_env *e);
+
+int				get_color(int color, int i, int i_max);
 
 void			mandelbrot(t_env *e, int x, int y);
 void			julia(t_env *e, int x, int y);
@@ -201,19 +208,10 @@ void			brain(t_env *e, int x, int y);
 void			mandelblob(t_env *e, int x, int y);
 void			frog(t_env *e, int x, int y);
 
-int				get_color(int color, int i, int i_max);
-
-void			get_coords(t_env *e, t_point *p, int x, int y);
-void			*multithread(t_thrds *fract_thrds);
-void			create_image(t_env *e);
-void			print_image(t_env *e);
-
 void			zoom(t_env *e, int key, int x, int y);
 void			toggle_k(t_env *e, int key, double x, double y);
 void			move_window(t_env *e, int key);
-void			change_iter(t_env *e, int btn);
 void			change_color(t_env *e, int key);
 void			change_fractal(t_env *e, int key);
-void			reset(t_env *e);
 
 #endif

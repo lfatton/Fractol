@@ -6,13 +6,13 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:09:07 by lfatton           #+#    #+#             */
-/*   Updated: 2018/10/25 19:13:22 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/23 17:43:48 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	get_fractal_name(t_env *e, char *str)
+static int	get_fractal_name(t_env *e, char *str)
 {
 	if ((!ft_strcmp(str, "mandelbrot")) && (e->fract = MANDEL))
 		e->fract_funct = &mandelbrot;
@@ -35,15 +35,7 @@ int	get_fractal_name(t_env *e, char *str)
 	return (e->fract);
 }
 
-int	expose_hook(t_env *e)
-{
-	print_image(e);
-	mlx_put_image_to_window(e->mlx_ptr, e->win_ptr, e->img->ptr, 0, 0);
-	display_hud(e);
-	return (0);
-}
-
-int	main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	t_env	*e;
 
@@ -56,9 +48,9 @@ int	main(int ac, char **av)
 	init_fractol(e, av[1]);
 	mlx_expose_hook(e->win_ptr, expose_hook, e);
 	mlx_hook(e->win_ptr, 2, 5, key_hook, e);
-        mlx_hook(e->win_ptr, 4, 1L << 2,  mouse_hook, e);
-        mlx_hook(e->win_ptr, 6, 1L << 6, mouse_motion, e);
-        mlx_hook(e->win_ptr, 17, 1L << 17, quit_fractol, e);
+	mlx_hook(e->win_ptr, 4, 1L << 2, mouse_hook, e);
+	mlx_hook(e->win_ptr, 6, 1L << 6, mouse_motion, e);
+	mlx_hook(e->win_ptr, 17, 1L << 17, quit_fractol, e);
 	mlx_loop(e->mlx_ptr);
 	pthread_exit(NULL);
 	return (EXIT_SUCCESS);
