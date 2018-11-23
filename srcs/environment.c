@@ -14,8 +14,6 @@
 
 int		key_hook(int key, t_env *e)
 {
-	if (key == KEY_SPACE)
-		e->lock = (e->lock == 0) ? 1 : 0;
 	if (key == ESC)
 		quit_fractol(e);
 	if (key == PAD_ADD || key == PAD_SUB)
@@ -33,8 +31,13 @@ int		key_hook(int key, t_env *e)
 		|| key == KEY_5 || key == KEY_6 || key == KEY_7 || key == KEY_8
 		|| key == KEY_C)
 		change_fractal(e, key);
+	if (key == KEY_H)
+		e->help = (e->help == 0) ? 1 : 0;
 	if (key == KEY_R)
 		reset(e);
+	expose_hook(e);
+	if (key == KEY_SPACE)
+		e->lock = (e->lock == 0) ? 1 : 0;
 	return (0);
 }
 
@@ -49,6 +52,7 @@ int		mouse_hook(int btn, int x, int y, t_env *e)
 		if (btn == ZOOM_IN || btn == ZOOM_OUT)
 			zoom(e, btn, x, y);
 	}
+	expose_hook(e);
 	return (0);
 }
 
@@ -61,6 +65,7 @@ int		mouse_motion(int x, int y, t_env *e)
 	if (e->lock)
 		toggle_k(e, -1, e->prev_mouse_x - e->mouse_x, e->prev_mouse_y -
 				e->mouse_y);
+	expose_hook(e);
 	return (0);
 }
 
@@ -118,6 +123,6 @@ void	init_fractol(t_env *e, char *str)
 	e->img->c = BW;
 	e->img->i_max = 50;
 	e->cos = 0;
+	e->help = 0;
 	create_image(e);
-	print_image(e);
 }

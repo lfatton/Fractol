@@ -18,6 +18,7 @@ SRC_PATH = srcs
 
 SRC_NAME =	main.c \
 			environment.c \
+			hud.c \
 			events.c \
 			image.c \
 			colors.c \

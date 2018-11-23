@@ -85,7 +85,6 @@ void	print_image(t_env *e)
 	while (i--)
 		if (pthread_join(thrds[i], NULL))
 			error_fractol("cannot join threads");
-	mlx_put_image_to_window(e->mlx_ptr, e->win_ptr, e->img->ptr, 0, 0);
 	free(fract_thrds->e);
 	free(fract_thrds);
 }

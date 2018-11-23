@@ -90,9 +90,8 @@
 #  define KEY_W 13
 #  define KEY_S 1
 #  define KEY_R 15
-#  define KEY_F 3
 #  define KEY_C 8
-#  define KEY_DOT 47
+#  define KEY_H 4
 #  define KEY_SPACE 49
 # else
 #  define ESC 65307
@@ -125,9 +124,8 @@
 #  define KEY_W 119
 #  define KEY_S 115
 #  define KEY_R 114
-#  define KEY_F 102
 #  define KEY_C 99
-#  define KEY_DOT 46
+#  define KEY_H 104
 #  define KEY_SPACE 32
 # endif
 
@@ -167,6 +165,7 @@ typedef struct	s_env
 	double		mouse_y;
 	int			lock;
 	int			cos;
+	int			help;
 	int			thrds_x;
 	int			thrds_y;
 	void		(*fract_funct)(struct s_env *e, int x, int y);
@@ -182,6 +181,9 @@ typedef struct	s_thrds
 
 int				get_fractal_name(t_env *e, char *str);
 
+void			display_hud(t_env *e);
+
+int				expose_hook(t_env *e);
 int				key_hook(int key, t_env *e);
 int				mouse_hook(int btn, int x, int y, t_env *e);
 int				mouse_motion(int x, int y, t_env *e);

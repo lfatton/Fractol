@@ -35,6 +35,14 @@ int	get_fractal_name(t_env *e, char *str)
 	return (e->fract);
 }
 
+int	expose_hook(t_env *e)
+{
+	print_image(e);
+	mlx_put_image_to_window(e->mlx_ptr, e->win_ptr, e->img->ptr, 0, 0);
+	display_hud(e);
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	t_env	*e;
@@ -46,6 +54,7 @@ int	main(int ac, char **av)
 		error_fractol("usage: ./fractol [mandelbrot/julia/burning_ship"
 				"/burning_julia/tricorn/brain/mandelblob/frog]");
 	init_fractol(e, av[1]);
+	mlx_expose_hook(e->win_ptr, expose_hook, e);
 	mlx_hook(e->win_ptr, 2, 5, key_hook, e);
         mlx_hook(e->win_ptr, 4, 1L << 2,  mouse_hook, e);
         mlx_hook(e->win_ptr, 6, 1L << 6, mouse_motion, e);
