@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 10:13:18 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/26 12:33:48 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/26 16:50:40 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	display_help(t_env *e)
 	mlx_string_put(e->mlx_ptr, e->win_ptr, 10, WIN_H - 225, 0xFFFFFF, "Reset: "
 			"R");
 	mlx_string_put(e->mlx_ptr, e->win_ptr, 10, WIN_H - 200, 0xFFFFFF, "Mouse "
-			"lock: SPACE");
+			"lock: zoom button or SPACE");
 	mlx_string_put(e->mlx_ptr, e->win_ptr, 10, WIN_H - 175, 0xFFFFFF, "Toggle "
 			"julia/burning_julia/brain/frog param: W A S D or move mouse "
 			"(unlocked)");
