@@ -6,7 +6,7 @@
 #    By: lfatton <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/30 00:05:23 by lfatton           #+#    #+#              #
-#    Updated: 2018/11/23 17:55:14 by lfatton          ###   ########.fr        #
+#    Updated: 2018/11/26 12:20:28 by lfatton          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,12 +74,12 @@ RM = rm -rf
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(INCL)
+$(NAME): $(OBJS)
 	@$(MAKE) -C $(MLX_NAME)
 	@$(MAKE) -C libft
 	@$(CC) $(OBJS) $(LDLIBFT) $(LDLMX) $(MLXFLAGS) $(LIBS) -o $@
 
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCL)
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@$(CC) $(CFLAGS) $(IFLAGS) -o $@ -c $<
 

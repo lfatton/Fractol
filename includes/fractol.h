@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:08:44 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/23 17:55:17 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/26 12:44:54 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <stdlib.h>
 # include <math.h>
 # include <pthread.h>
-
-# include <stdio.h>
 
 # define THREADS 8
 # define WIN_W 1920
@@ -193,7 +191,6 @@ int				expose_hook(t_env *e);
 void			display_hud(t_env *e);
 
 void			get_coords(t_env *e, t_point *p, int x, int y);
-void			*multithread(t_thrds *fract_thrds);
 void			create_image(t_env *e);
 void			print_image(t_env *e);
 

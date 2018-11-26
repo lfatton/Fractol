@@ -6,13 +6,13 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:14:07 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/23 17:28:55 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/26 12:42:56 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	get_coords(t_env *e, t_point *p, int x, int y)
+void		get_coords(t_env *e, t_point *p, int x, int y)
 {
 	if (e->fract == MANDEL || e->fract == SHIP || e->fract == TRI || e->fract
 			== BLOB)
@@ -40,7 +40,7 @@ void	get_coords(t_env *e, t_point *p, int x, int y)
 	}
 }
 
-void	create_image(t_env *e)
+void		create_image(t_env *e)
 {
 	int	bpp;
 	int	s_l;
@@ -50,7 +50,7 @@ void	create_image(t_env *e)
 	e->img->str = (int*)mlx_get_data_addr(e->img->ptr, &bpp, &s_l, &endian);
 }
 
-void	*multithread(t_thrds *fract_thrds)
+static void	*threading(t_thrds *fract_thrds)
 {
 	int	x;
 	int	y;
@@ -69,26 +69,22 @@ void	*multithread(t_thrds *fract_thrds)
 	return (NULL);
 }
 
-void	print_image(t_env *e)
+void		print_image(t_env *e)
 {
 	pthread_t	thrds[THREADS];
-	t_thrds		*fract_thrds;
+	t_thrds		fract_thrds[THREADS];
 	int			i;
 
 	i = 0;
 	while (i < THREADS)
 	{
-		fract_thrds = (t_thrds*)malloc(sizeof(t_thrds));
-		fract_thrds->i = i;
-		fract_thrds->e = (t_env*)malloc(sizeof(t_env));
-		ft_memcpy(fract_thrds->e, e, sizeof(t_env));
-		if (pthread_create(&thrds[i], NULL, (void*)multithread, fract_thrds))
+		fract_thrds[i].i = i;
+		fract_thrds[i].e = e;
+		if (pthread_create(&thrds[i], NULL, (void*)threading, &fract_thrds[i]))
 			error_fractol("cannot create thread");
 		i++;
 	}
 	while (i--)
 		if (pthread_join(thrds[i], NULL))
 			error_fractol("cannot join threads");
-	free(fract_thrds->e);
-	free(fract_thrds);
 }
