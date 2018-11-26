@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:08:44 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/26 16:58:40 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/26 17:44:02 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,6 @@ typedef struct	s_env
 	int			fract;
 	double		w;
 	double		h;
-	int			x;
-	int			y;
 	double		prev_mouse_x;
 	double		prev_mouse_y;
 	double		mouse_x;
@@ -164,8 +162,6 @@ typedef struct	s_env
 	int			lock;
 	int			cos;
 	int			help;
-	int			thrds_x;
-	int			thrds_y;
 	void		(*fract_funct)(struct s_env *e, int x, int y);
 	t_img		*img;
 	t_point		*p;
