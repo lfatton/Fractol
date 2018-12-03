@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:16:18 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/22 22:49:27 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/29 19:04:00 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	brain(t_env *e, int x, int y)
 	i = -1;
 	while ((ft_pow(p->z_r) + ft_pow(p->z_i) <= 4) && ++i < e->img->i_max)
 	{
-		p->z_i = (p->z_i > 0 ? -p->z_i : p->z_i);
+		p->z_i = -ft_dabs(p->z_i);
 		p->prev_z_r = p->z_r;
 		p->prev_z_i = p->z_i;
 		p->z_r = ft_pow(p->z_r) - ft_pow(p->z_i) + p->k_r;

@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:09:07 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/26 12:31:09 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/29 19:05:39 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ int			main(int ac, char **av)
 {
 	t_env	*e;
 
-	e = (t_env*)malloc(sizeof(t_env));
-	e->img = (t_img*)malloc(sizeof(t_img));
-	e->p = (t_point*)malloc(sizeof(t_point));
+	if	(!(e = (t_env*)malloc(sizeof(t_env))))
+		error_fractol("error: cannot allocate memory");
+	if (!(e->img = (t_img*)malloc(sizeof(t_img))))
+		error_fractol("error: cannot allocate memory");
+	if (!(e->p = (t_point*)malloc(sizeof(t_point))))
+		error_fractol("error: cannot allocate memory");
 	if (ac != 2 || !get_fractal_name(e, av[1]))
 		error_fractol("usage: ./fractol [mandelbrot/julia/burning_ship"
 				"/burning_julia/tricorn/brain/mandelblob/frog]");

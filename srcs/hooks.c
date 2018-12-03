@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 17:43:57 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/23 17:54:06 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/29 18:42:39 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	mouse_hook(int btn, int x, int y, t_env *e)
 	if (!e->lock)
 	{
 		if (btn == LEFT_BUTTON)
-			e->img->i_max += 1;
+			e->img->i_max += 50;
 		else if (btn == RIGHT_BUTTON && e->img->i_max > 4)
-			e->img->i_max -= 1;
+			e->img->i_max -= 50;
 		if (btn == ZOOM_IN || btn == ZOOM_OUT)
 			zoom(e, btn, x, y);
 	}

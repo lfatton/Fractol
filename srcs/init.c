@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:11:45 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/26 12:42:58 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/12/03 13:53:27 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int		quit_fractol(t_env *e)
 
 void	init_fractol(t_env *e, char *str)
 {
-	e->mlx_ptr = mlx_init();
+	if (!(e->mlx_ptr = mlx_init()))
+		error_fractol("error: cannot initiate mlx");
 	e->win_ptr = mlx_new_window(e->mlx_ptr, WIN_W, WIN_H, str);
 	mlx_do_key_autorepeaton(e->mlx_ptr);
 	set_values(e);

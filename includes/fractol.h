@@ -6,7 +6,7 @@
 /*   By: lfatton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 14:08:44 by lfatton           #+#    #+#             */
-/*   Updated: 2018/11/26 17:44:02 by lfatton          ###   ########.fr       */
+/*   Updated: 2018/11/29 19:49:38 by lfatton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 # include <math.h>
 # include <pthread.h>
 
-# define THREADS 16
-# define WIN_W 1920
-# define WIN_H 1080
+# define THREADS 20
+# define WIN_W 800
+# define WIN_H 800
 # define HALF_W WIN_W / 2.0
 # define HALF_H WIN_H / 2.0
 # define R 1.05
