@@ -1,9 +1,9 @@
 # Fractol
 ```
 42 school project computing and rendering several different fractals (Mandelbrot, Julia, etc.), 
-allowing the user to navigate through and into them
+allowing the user to navigate through and into them.
 
-No librairies were allowed except the school given one (minilibx) for handling the window
+No librairies were allowed except the school given one (minilibx) for handling the window.
 ```
 ![mandelbrot](https://github.com/lfatton/portfolio/blob/20c175dbe96c71647014402fd39fc66f97eb5045/src/assets/images/fractol1.png "mandelbrot")
 ![julia_1](https://github.com/lfatton/portfolio/blob/20c175dbe96c71647014402fd39fc66f97eb5045/src/assets/images/fractol2.png "julia 1")
